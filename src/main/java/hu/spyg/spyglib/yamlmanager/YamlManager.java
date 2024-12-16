@@ -311,6 +311,15 @@ public abstract class YamlManager {
         getConfig().set(node, config.get(node, value));
     }
 
+    /**
+     * Sets a value in the configuration
+     * 
+     * @param node     The node to set the value in
+     * 
+     * @param value    The value to set
+     * 
+     * @param comments The comments to set
+     */
     public void set(String node, Object value, List<String> comments) {
         getConfig().set(node, getConfig().get(node, value));
         getConfig().setComments(node, comments);
