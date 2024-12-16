@@ -7,11 +7,17 @@
     <groupId>io.github.ikolihu</groupId>
     <artifactId>spyglib</artifactId>
     <version>1.0</version>
+    <url>https://github.com/SpyG-Studios/spyg-lib</url>
+    <description>A lightweight library for Spyg plugins.</description>
+
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <java.version>21</java.version>
+        <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
+        <maven.javadoc.plugin.version>3.6.2</maven.javadoc.plugin.version>
+        <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
     </properties>
 
     <licenses>
@@ -21,6 +27,12 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/SpyG-Studios/spyg-lib.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:SpyG-Studios/spyg-lib.git</developerConnection>
+        <url>https://github.com/SpyG-Studios/spyg-lib</url>
+    </scm>
 
     <build>
         <plugins>
@@ -36,7 +48,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
                     <release>21</release>
                 </configuration>
@@ -45,11 +57,42 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.2</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <version>${maven.javadoc.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven.gpg.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -79,6 +122,18 @@
         </dependency>
 
     </dependencies>
+
+    <developers>
+        <developer>
+            <id>ikolihu</id>
+            <name>Szilágyi Péter</name>
+            <email>szilagypet@gmail.com</email>
+        </developer>
+        <developer>
+            <id>Ris</id>
+            <name>Rostás András</name>
+        </developer>
+    </developers>
 
 
 </project>
