@@ -1,4 +1,4 @@
-package hu.spyg.spyglib.yamlmanager;
+package com.spygstudios.spyglib.yamlmanager;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import hu.spyg.spyglib.color.TranslateColor;
+import com.spygstudios.spyglib.color.TranslateColor;
+
 import net.kyori.adventure.text.Component;
 
 /**
@@ -449,7 +450,7 @@ public abstract class YamlManager {
      * </p>
      *
      * @param fileName a {@link java.lang.String} object
-     * @return a {@link hu.spyg.spyglib.yamlmanager.YamlManager} object
+     * @return a {@link com.spygstudios.spyglib.yamlmanager.YamlManager} object
      */
     public static YamlManager getYamlManager(String fileName) {
         for (YamlManager yamlManager : yamlManagers) {

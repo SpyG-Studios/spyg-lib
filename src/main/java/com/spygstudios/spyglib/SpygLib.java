@@ -1,4 +1,4 @@
-package hu.spyg.spyglib;
+package com.spygstudios.spyglib;
 
 /**
  * <p>

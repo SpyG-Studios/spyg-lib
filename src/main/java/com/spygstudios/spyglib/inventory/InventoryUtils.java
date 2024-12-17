@@ -1,4 +1,4 @@
-package hu.spyg.spyglib.inventory;
+package com.spygstudios.spyglib.inventory;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

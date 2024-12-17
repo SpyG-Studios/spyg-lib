@@ -1,4 +1,4 @@
-package hu.spyg.spyglib.components;
+package com.spygstudios.spyglib.components;
 
 import java.util.ArrayList;
 import java.util.List;

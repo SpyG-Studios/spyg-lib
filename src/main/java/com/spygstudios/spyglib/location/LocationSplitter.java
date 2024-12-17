@@ -1,4 +1,4 @@
-package hu.spyg.spyglib.location;
+package com.spygstudios.spyglib.location;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

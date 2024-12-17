@@ -1,4 +1,4 @@
-package hu.spyg.spyglib.color;
+package com.spygstudios.spyglib.color;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import hu.spyg.spyglib.components.ComponentUtils;
+import com.spygstudios.spyglib.components.ComponentUtils;
+
 import net.kyori.adventure.text.Component;
 
 /**

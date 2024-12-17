@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.ikolihu</groupId>
+    <groupId>com.spygstudios</groupId>
     <artifactId>spyglib</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <url>https://github.com/SpyG-Studios/spyg-lib</url>
     <description>A lightweight library for Spyg plugins.</description>
 
@@ -127,11 +126,12 @@
         <developer>
             <id>ikolihu</id>
             <name>Szilágyi Péter</name>
-            <email>szilagypet@gmail.com</email>
+            <email>szilagypet53@gmail.com</email>
         </developer>
         <developer>
             <id>Ris</id>
             <name>Rostás András</name>
+            <email>rostandris@gmail.com</email>
         </developer>
     </developers>
 
