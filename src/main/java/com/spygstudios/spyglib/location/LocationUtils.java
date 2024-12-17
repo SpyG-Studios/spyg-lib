@@ -6,13 +6,13 @@ import org.bukkit.World;
 
 /**
  * <p>
- * LocationSplitter class.
+ * LocationUtils class.
  * </p>
  *
  * @author Ris
  * @version $Id: $Id
  */
-public class LocationSplitter {
+public class LocationUtils {
 
     /*
      * Splits a string into a location.
@@ -29,7 +29,8 @@ public class LocationSplitter {
      */
     public static Location toLocation(String location) {
         String[] parts = location.split(" ");
-        return new Location(Bukkit.getWorld(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Float.parseFloat(parts[4]), Float.parseFloat(parts[5]));
+        return new Location(Bukkit.getWorld(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]), Double.parseDouble(parts[3]), Float.parseFloat(parts[4]),
+                Float.parseFloat(parts[5]));
     }
 
     /*
