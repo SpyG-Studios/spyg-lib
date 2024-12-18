@@ -296,6 +296,17 @@ public abstract class YamlManager {
     /**
      * Sets a value in the configuration
      * 
+     * @param node  The node to get the value from
+     * 
+     * @param value The value to set
+     */
+    public void overwriteSet(String node, Object value) {
+        getConfig().set(node, value);
+    }
+
+    /**
+     * Sets a value in the configuration, if the value is not already set
+     * 
      * @param node  The node to set the value in
      * 
      * @param value The value to set
