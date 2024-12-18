@@ -232,4 +232,54 @@ public class InventoryUtils {
     public static void removeAll(Player player, Material material) {
         removeAll(player.getInventory(), material);
     }
+
+    /*
+     * Counts the amount of a certain item in the inventory
+     * 
+     * @param inventory The inventory to count the item for
+     * 
+     * @param material The material to count
+     * 
+     * @return The amount of the item in the inventory
+     *
+     */
+    /**
+     * <p>countItems.</p>
+     *
+     * @param inventory a {@link org.bukkit.inventory.Inventory} object
+     * @param material a {@link org.bukkit.Material} object
+     * @return a int
+     */
+    public static int countItems(Inventory inventory, Material material) {
+        int count = 0;
+
+        for (ItemStack item : inventory.getContents()) {
+            if (item != null && item.getType() == material) {
+                count += item.getAmount();
+            }
+        }
+
+        return count;
+    }
+
+    /*
+     * Counts the amount of a certain item in the player's inventory
+     * 
+     * @param player The player to count the item for
+     * 
+     * @param material The material to count
+     * 
+     * @return The amount of the item in the player's inventory
+     *
+     */
+    /**
+     * <p>countItems.</p>
+     *
+     * @param player a {@link org.bukkit.entity.Player} object
+     * @param material a {@link org.bukkit.Material} object
+     * @return a int
+     */
+    public static int countItems(Player player, Material material) {
+        return countItems(player.getInventory(), material);
+    }
 }
