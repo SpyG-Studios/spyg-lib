@@ -222,6 +222,8 @@ public abstract class YamlManager {
 
     /**
      * Gets the prefix from the configuration
+     *
+     * @return a {@link java.lang.String} object
      */
     public String getPrefix() {
         return getString("prefix");
@@ -229,8 +231,9 @@ public abstract class YamlManager {
 
     /**
      * Gets a message from the configuration
-     * 
+     *
      * @param node The node to get the value from
+     * @return a {@link net.kyori.adventure.text.Component} object
      */
     public Component getMessage(String node) {
         return TranslateColor.translate(getString("messages." + node).replace("%prefix%", getPrefix()));
@@ -295,9 +298,8 @@ public abstract class YamlManager {
 
     /**
      * Sets a value in the configuration
-     * 
+     *
      * @param node  The node to get the value from
-     * 
      * @param value The value to set
      */
     public void overwriteSet(String node, Object value) {
@@ -325,11 +327,9 @@ public abstract class YamlManager {
 
     /**
      * Sets a value in the configuration
-     * 
+     *
      * @param node     The node to set the value in
-     * 
      * @param value    The value to set
-     * 
      * @param comments The comments to set
      */
     public void set(String node, Object value, List<String> comments) {

@@ -2,6 +2,7 @@ package com.spygstudios.spyglib.components;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -90,5 +91,49 @@ public class ComponentUtils {
             messages.add(fromComponent(component));
         }
         return messages;
+    }
+
+    /**
+     * Replaces a key in a component with a value
+     *
+     * @param component The component to replace
+     * @param key       The key to replace
+     * @param value     The value to replace the key with
+     * @return a {@link net.kyori.adventure.text.Component} object
+     */
+    public static Component replaceComponent(Component component, String key, String value) {
+        return component.replaceText(builder -> builder.matchLiteral(key).replacement(value));
+    }
+
+    /**
+     * Replaces a key in a list of components with a value
+     *
+     * @param component a {@link net.kyori.adventure.text.Component} object
+     * @param replacements a {@link java.util.Map} object
+     * @return a {@link net.kyori.adventure.text.Component} object
+     */
+    public static Component replaceComponent(Component component, Map<String, String> replacements) {
+        Component newComponent = component;
+        for (Map.Entry<String, String> entry : replacements.entrySet()) {
+            newComponent = replaceComponent(newComponent, entry.getKey(), entry.getValue());
+        }
+        return newComponent;
+
+    }
+
+    /**
+     * Replaces a key in a list of components with a value
+     *
+     * @param components The components to replace
+     * @param key        The key to replace
+     * @param value      The value to replace the key with
+     * @return a {@link java.util.List} object
+     */
+    public static List<Component> replaceComponent(List<Component> components, String key, String value) {
+        List<Component> newComponents = new ArrayList<>();
+        for (Component component : components) {
+            newComponents.add(replaceComponent(component, key, value));
+        }
+        return newComponents;
     }
 }
