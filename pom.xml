@@ -6,7 +6,7 @@
 
     <groupId>com.spygstudios</groupId>
     <artifactId>spyglib</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <url>https://github.com/SpyG-Studios/spyg-lib</url>
     <description>A lightweight library for Spyg plugins.</description>
 
