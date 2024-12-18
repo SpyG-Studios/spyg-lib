@@ -22,8 +22,6 @@ public class TranslateColor {
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
     private static final Pattern oldPattern = Pattern.compile("&[a-fA-F0-9lkLKmMnNrRoO]");
 
-    /** Constant <code>HEX_PATTERN</code> */
-    public static final Pattern HEX_PATTERN = Pattern.compile("&#(\\w{5}[0-9A-Fa-f])", Pattern.CASE_INSENSITIVE);
     private static final Map<String, String> colorCodes = new HashMap<>() {
         {
             put("&0", "<black>");
