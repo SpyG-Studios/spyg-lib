@@ -366,8 +366,8 @@ public abstract class YamlManager {
      *
      * @param node a {@link java.lang.String} object
      */
-    public void createSection(String node) {
-        getConfig().createSection(node);
+    public ConfigurationSection createSection(String node) {
+        return getConfig().createSection(node);
     }
 
     /**
