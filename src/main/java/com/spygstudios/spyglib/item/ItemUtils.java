@@ -9,7 +9,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.spygstudios.spyglib.color.TranslateColor;
 
 /**
- * <p>ItemUtils class.</p>
+ * <p>
+ * ItemUtils class.
+ * </p>
  *
  * @author Ris
  * @version $Id: $Id
@@ -40,7 +42,11 @@ public class ItemUtils {
 
         ItemStack item = new ItemStack(mat, amount);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(TranslateColor.translate(displayname));
+
+        if (displayname != null && !displayname.equalsIgnoreCase("none")) {
+            meta.displayName(TranslateColor.translate(displayname));
+        }
+
         if (lore != null) {
             meta.lore(TranslateColor.translate(lore));
         }
@@ -52,9 +58,9 @@ public class ItemUtils {
     /**
      * Creates an ItemStack with the specified material, displayname, and lore
      *
-     * @param material a {@link java.lang.String} object
+     * @param material    a {@link java.lang.String} object
      * @param displayname a {@link java.lang.String} object
-     * @param lore a {@link java.util.List} object
+     * @param lore        a {@link java.util.List} object
      * @return a {@link org.bukkit.inventory.ItemStack} object
      */
     public static ItemStack create(String material, String displayname, List<String> lore) {
@@ -64,7 +70,7 @@ public class ItemUtils {
     /**
      * Creates an ItemStack with the specified material and displayname
      *
-     * @param material a {@link java.lang.String} object
+     * @param material    a {@link java.lang.String} object
      * @param displayname a {@link java.lang.String} object
      * @return a {@link org.bukkit.inventory.ItemStack} object
      */
