@@ -20,27 +20,37 @@ public class ItemUtils {
 
     /**
      * Creates an ItemStack with the specified material, displayname, lore, and
-     * amount
      *
-     * @param material    The material of the item
-     * @param displayname The display name of the item
-     * @param lore        The lore of the item
-     * @param amount      The amount of the item
+     * @param material    a {@link java.lang.String} object
+     * @param displayname a {@link java.lang.String} object
+     * @param lore        a {@link java.util.List} object
+     * @param amount      a int
      * @return a {@link org.bukkit.inventory.ItemStack} object
      */
     public static ItemStack create(String material, String displayname, List<String> lore, int amount) {
-
         Material mat = Material.getMaterial(material);
 
         if (mat == null) {
             throw new IllegalArgumentException("Invalid material: " + material);
         }
+        return create(mat, displayname, lore, amount);
+    }
 
+    /**
+     * Creates an ItemStack with the specified material, displayname, lore, and
+     *
+     * @param material    a {@link org.bukkit.Material} object
+     * @param displayname a {@link java.lang.String} object
+     * @param lore        a {@link java.util.List} object
+     * @param amount      a int
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
+    public static ItemStack create(Material material, String displayname, List<String> lore, int amount) {
         if (amount < 1) {
             throw new IllegalArgumentException("Amount must be greater than 0");
         }
 
-        ItemStack item = new ItemStack(mat, amount);
+        ItemStack item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
 
         if (displayname != null && !displayname.equalsIgnoreCase("none")) {
