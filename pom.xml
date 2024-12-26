@@ -50,6 +50,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -141,6 +142,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>dev.rollczi</groupId>
+            <artifactId>litecommands-adventure</artifactId>
+            <version>3.9.3</version>
+        </dependency>
         <dependency>
             <groupId>dev.rollczi</groupId>
             <artifactId>litecommands-bukkit</artifactId>
