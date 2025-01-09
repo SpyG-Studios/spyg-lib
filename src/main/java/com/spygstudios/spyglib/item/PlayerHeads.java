@@ -159,8 +159,8 @@ public class PlayerHeads {
         try {
             URL url = URI.create(PlayerHeads.getSkinUrl(uuid.toString())).toURL();
             profile.getTextures().setSkin(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        } catch (MalformedURLException | NullPointerException e) {
+            return null;
         }
 
         return profile;
