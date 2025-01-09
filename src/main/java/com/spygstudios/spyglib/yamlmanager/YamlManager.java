@@ -365,6 +365,7 @@ public abstract class YamlManager {
      * </p>
      *
      * @param node a {@link java.lang.String} object
+     * @return a {@link org.bukkit.configuration.ConfigurationSection} object
      */
     public ConfigurationSection createSection(String node) {
         return getConfig().createSection(node);

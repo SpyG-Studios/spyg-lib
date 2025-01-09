@@ -113,7 +113,10 @@
     </build>
 
     <repositories>
-
+   <repository>
+        <id>minecraft-repo</id>
+        <url>https://libraries.minecraft.net/</url>
+    </repository>
         <repository>
             <id>purpur</id>
             <name>Purpur Maven Repo</name>
@@ -132,6 +135,17 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>authlib</artifactId>
+            <version>1.5.21</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>dev.rollczi</groupId>
             <artifactId>litecommands-adventure</artifactId>
