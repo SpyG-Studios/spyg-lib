@@ -44,7 +44,8 @@ public class ComponentUtils {
      * fromComponent.
      * </p>
      *
-     * @param component a {@link net.kyori.adventure.text.Component} object
+     * @param component a {@link net.kyori.adventure.text.Component}
+     *                  object
      * @return a {@link java.lang.String} object
      */
     public static String fromComponent(Component component) {
@@ -108,7 +109,8 @@ public class ComponentUtils {
     /**
      * Replaces a key in a list of components with a value
      *
-     * @param component a {@link net.kyori.adventure.text.Component} object
+     * @param component    a {@link net.kyori.adventure.text.Component}
+     *                     object
      * @param replacements a {@link java.util.Map} object
      * @return a {@link net.kyori.adventure.text.Component} object
      */

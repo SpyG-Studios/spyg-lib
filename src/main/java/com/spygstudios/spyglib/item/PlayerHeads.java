@@ -55,7 +55,8 @@ public class PlayerHeads {
     // com.destroystokyo.paper.profile.PlayerProfile profile =
     // Bukkit.createProfile(uuid);
 
-    // profile.setProperty(new ProfileProperty("textures", getSkin(uuid)));
+    // profile.setProperty(new ProfileProperty("textures",
+    // getSkin(uuid)));
 
     // skullMeta.setPlayerProfile(profile);
     // skull.setItemMeta(skullMeta);

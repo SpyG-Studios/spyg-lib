@@ -8,7 +8,9 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * <p>PersistentData class.</p>
+ * <p>
+ * PersistentData class.
+ * </p>
  *
  * @author Ris
  * @version $Id: $Id
@@ -21,10 +23,12 @@ public class PersistentData {
     private PersistentDataContainer dataContainer;
 
     /**
-     * <p>Constructor for PersistentData.</p>
+     * <p>
+     * Constructor for PersistentData.
+     * </p>
      *
      * @param plugin a {@link org.bukkit.plugin.java.JavaPlugin} object
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param item   a {@link org.bukkit.inventory.ItemStack} object
      */
     public PersistentData(JavaPlugin plugin, ItemStack item) {
         this.plugin = plugin;
@@ -34,10 +38,15 @@ public class PersistentData {
     }
 
     /**
-     * <p>Constructor for PersistentData.</p>
+     * <p>
+     * Constructor for PersistentData.
+     * </p>
      *
-     * @param plugin a {@link org.bukkit.plugin.java.JavaPlugin} object
-     * @param dataContainer a {@link org.bukkit.persistence.PersistentDataContainer} object
+     * @param plugin        a {@link org.bukkit.plugin.java.JavaPlugin}
+     *                      object
+     * @param dataContainer a
+     *                      {@link org.bukkit.persistence.PersistentDataContainer}
+     *                      object
      */
     public PersistentData(JavaPlugin plugin, PersistentDataContainer dataContainer) {
         this.plugin = plugin;
@@ -45,7 +54,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>getNamespacedKey.</p>
+     * <p>
+     * getNamespacedKey.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a {@link org.bukkit.NamespacedKey} object
@@ -55,16 +66,21 @@ public class PersistentData {
     }
 
     /**
-     * <p>Getter for the field <code>dataContainer</code>.</p>
+     * <p>
+     * Getter for the field <code>dataContainer</code>.
+     * </p>
      *
-     * @return a {@link org.bukkit.persistence.PersistentDataContainer} object
+     * @return a {@link org.bukkit.persistence.PersistentDataContainer}
+     *         object
      */
     public PersistentDataContainer getDataContainer() {
         return dataContainer;
     }
 
     /**
-     * <p>save.</p>
+     * <p>
+     * save.
+     * </p>
      */
     public void save() {
         if (itemMeta != null) {
@@ -73,7 +89,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>hasString.</p>
+     * <p>
+     * hasString.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a boolean
@@ -83,7 +101,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>hasInt.</p>
+     * <p>
+     * hasInt.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a boolean
@@ -93,7 +113,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>hasDouble.</p>
+     * <p>
+     * hasDouble.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a boolean
@@ -103,7 +125,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>hasBoolean.</p>
+     * <p>
+     * hasBoolean.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a boolean
@@ -113,7 +137,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>hasLong.</p>
+     * <p>
+     * hasLong.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a boolean
@@ -123,9 +149,11 @@ public class PersistentData {
     }
 
     /**
-     * <p>set.</p>
+     * <p>
+     * set.
+     * </p>
      *
-     * @param key a {@link java.lang.String} object
+     * @param key   a {@link java.lang.String} object
      * @param value a {@link java.lang.String} object
      */
     public void set(String key, String value) {
@@ -133,9 +161,11 @@ public class PersistentData {
     }
 
     /**
-     * <p>set.</p>
+     * <p>
+     * set.
+     * </p>
      *
-     * @param key a {@link java.lang.String} object
+     * @param key   a {@link java.lang.String} object
      * @param value a int
      */
     public void set(String key, int value) {
@@ -143,9 +173,11 @@ public class PersistentData {
     }
 
     /**
-     * <p>set.</p>
+     * <p>
+     * set.
+     * </p>
      *
-     * @param key a {@link java.lang.String} object
+     * @param key   a {@link java.lang.String} object
      * @param value a double
      */
     public void set(String key, double value) {
@@ -153,9 +185,11 @@ public class PersistentData {
     }
 
     /**
-     * <p>set.</p>
+     * <p>
+     * set.
+     * </p>
      *
-     * @param key a {@link java.lang.String} object
+     * @param key   a {@link java.lang.String} object
      * @param value a boolean
      */
     public void set(String key, boolean value) {
@@ -163,9 +197,11 @@ public class PersistentData {
     }
 
     /**
-     * <p>set.</p>
+     * <p>
+     * set.
+     * </p>
      *
-     * @param key a {@link java.lang.String} object
+     * @param key   a {@link java.lang.String} object
      * @param value a long
      */
     public void set(String key, long value) {
@@ -173,7 +209,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>getString.</p>
+     * <p>
+     * getString.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a {@link java.lang.String} object
@@ -183,7 +221,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>getInt.</p>
+     * <p>
+     * getInt.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a int
@@ -193,7 +233,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>getDouble.</p>
+     * <p>
+     * getDouble.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a double
@@ -203,7 +245,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>getBoolean.</p>
+     * <p>
+     * getBoolean.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a boolean
@@ -213,7 +257,9 @@ public class PersistentData {
     }
 
     /**
-     * <p>getLong.</p>
+     * <p>
+     * getLong.
+     * </p>
      *
      * @param key a {@link java.lang.String} object
      * @return a long

@@ -19,7 +19,8 @@ import com.spygstudios.spyglib.color.TranslateColor;
 public class ItemUtils {
 
     /**
-     * Creates an ItemStack with the specified material, displayname, lore, and
+     * Creates an ItemStack with the specified material, displayname,
+     * lore, and
      *
      * @param material    a {@link java.lang.String} object
      * @param displayname a {@link java.lang.String} object
@@ -37,7 +38,8 @@ public class ItemUtils {
     }
 
     /**
-     * Creates an ItemStack with the specified material, displayname, lore, and
+     * Creates an ItemStack with the specified material, displayname,
+     * lore, and
      *
      * @param material    a {@link org.bukkit.Material} object
      * @param displayname a {@link java.lang.String} object
@@ -66,7 +68,8 @@ public class ItemUtils {
     }
 
     /**
-     * Creates an ItemStack with the specified material, displayname, lore, and
+     * Creates an ItemStack with the specified material, displayname,
+     * lore, and
      *
      * @param material    a {@link org.bukkit.Material} object
      * @param displayname a {@link java.lang.String} object
@@ -78,7 +81,8 @@ public class ItemUtils {
     }
 
     /**
-     * Creates an ItemStack with the specified material, displayname, and lore
+     * Creates an ItemStack with the specified material, displayname, and
+     * lore
      *
      * @param material    a {@link java.lang.String} object
      * @param displayname a {@link java.lang.String} object

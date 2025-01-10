@@ -70,7 +70,8 @@ public class InventoryUtils {
     }
 
     /*
-     * Checks if the player has a certain amount of free slots in their inventory
+     * Checks if the player has a certain amount of free slots in their
+     * inventory
      * 
      * @param player The player to check
      * 
@@ -116,8 +117,8 @@ public class InventoryUtils {
     }
 
     /*
-     * Checks if the player has a certain amount of a certain item in their
-     * inventory
+     * Checks if the player has a certain amount of a certain item in
+     * their inventory
      * 
      * @param player The player to check
      * 
@@ -168,8 +169,8 @@ public class InventoryUtils {
     }
 
     /*
-     * Checks if the player has a certain amount of a certain item in their
-     * inventory
+     * Checks if the player has a certain amount of a certain item in
+     * their inventory
      * 
      * @param player The player to check
      * 
@@ -244,10 +245,12 @@ public class InventoryUtils {
      *
      */
     /**
-     * <p>countItems.</p>
+     * <p>
+     * countItems.
+     * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
-     * @param material a {@link org.bukkit.Material} object
+     * @param material  a {@link org.bukkit.Material} object
      * @return a int
      */
     public static int countItems(Inventory inventory, Material material) {
@@ -273,9 +276,11 @@ public class InventoryUtils {
      *
      */
     /**
-     * <p>countItems.</p>
+     * <p>
+     * countItems.
+     * </p>
      *
-     * @param player a {@link org.bukkit.entity.Player} object
+     * @param player   a {@link org.bukkit.entity.Player} object
      * @param material a {@link org.bukkit.Material} object
      * @return a int
      */

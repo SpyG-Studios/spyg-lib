@@ -1,6 +1,7 @@
 package com.spygstudios.spyglib.broadcast;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,7 +9,9 @@ import org.bukkit.entity.Player;
 import com.spygstudios.spyglib.color.TranslateColor;
 
 /**
- * <p>BroadcastMessage class.</p>
+ * <p>
+ * BroadcastMessage class.
+ * </p>
  *
  * @author Peter
  * @version $Id: $Id
@@ -16,15 +19,17 @@ import com.spygstudios.spyglib.color.TranslateColor;
 public class BroadcastMessage {
 
     /**
-     * <p>chat.</p>
+     * <p>
+     * chat.
+     * </p>
      *
-     * @param message a {@link java.lang.String} object
+     * @param message      a {@link java.lang.String} object
      * @param placeholders a {@link java.util.Map} object
-     * @param permission a {@link java.lang.String} object
+     * @param permission   a {@link java.lang.String} object
      */
     public static void chat(String message, Map<String, String> placeholders, String permission) {
-        for (String key : placeholders.keySet()) {
-            message = message.replace(key, placeholders.get(key));
+        for (Entry<String, String> placeholder : placeholders.entrySet()) {
+            message = message.replace(placeholder.getKey(), placeholder.getValue());
         }
 
         if (permission == null) {
@@ -43,9 +48,11 @@ public class BroadcastMessage {
     }
 
     /**
-     * <p>chat.</p>
+     * <p>
+     * chat.
+     * </p>
      *
-     * @param message a {@link java.lang.String} object
+     * @param message      a {@link java.lang.String} object
      * @param placeholders a {@link java.util.Map} object
      */
     public static void chat(String message, Map<String, String> placeholders) {
@@ -53,7 +60,9 @@ public class BroadcastMessage {
     }
 
     /**
-     * <p>chat.</p>
+     * <p>
+     * chat.
+     * </p>
      *
      * @param message a {@link java.lang.String} object
      */
@@ -62,9 +71,11 @@ public class BroadcastMessage {
     }
 
     /**
-     * <p>chat.</p>
+     * <p>
+     * chat.
+     * </p>
      *
-     * @param message a {@link java.lang.String} object
+     * @param message    a {@link java.lang.String} object
      * @param permission a {@link java.lang.String} object
      */
     public static void chat(String message, String permission) {
@@ -72,15 +83,17 @@ public class BroadcastMessage {
     }
 
     /**
-     * <p>actionBar.</p>
+     * <p>
+     * actionBar.
+     * </p>
      *
-     * @param message a {@link java.lang.String} object
+     * @param message      a {@link java.lang.String} object
      * @param placeholders a {@link java.util.Map} object
-     * @param permission a {@link java.lang.String} object
+     * @param permission   a {@link java.lang.String} object
      */
     public static void actionBar(String message, Map<String, String> placeholders, String permission) {
-        for (String key : placeholders.keySet()) {
-            message = message.replace(key, placeholders.get(key));
+        for (Entry<String, String> placeholder : placeholders.entrySet()) {
+            message = message.replace(placeholder.getKey(), placeholder.getValue());
         }
 
         if (permission == null) {
@@ -101,9 +114,11 @@ public class BroadcastMessage {
     }
 
     /**
-     * <p>actionBar.</p>
+     * <p>
+     * actionBar.
+     * </p>
      *
-     * @param message a {@link java.lang.String} object
+     * @param message      a {@link java.lang.String} object
      * @param placeholders a {@link java.util.Map} object
      */
     public static void actionBar(String message, Map<String, String> placeholders) {
@@ -111,7 +126,9 @@ public class BroadcastMessage {
     }
 
     /**
-     * <p>actionBar.</p>
+     * <p>
+     * actionBar.
+     * </p>
      *
      * @param message a {@link java.lang.String} object
      */
@@ -120,9 +137,11 @@ public class BroadcastMessage {
     }
 
     /**
-     * <p>actionBar.</p>
+     * <p>
+     * actionBar.
+     * </p>
      *
-     * @param message a {@link java.lang.String} object
+     * @param message    a {@link java.lang.String} object
      * @param permission a {@link java.lang.String} object
      */
     public static void actionBar(String message, String permission) {

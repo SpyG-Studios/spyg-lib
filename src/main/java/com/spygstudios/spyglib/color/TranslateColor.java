@@ -22,36 +22,35 @@ public class TranslateColor {
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
     private static final Pattern oldPattern = Pattern.compile("&[a-fA-F0-9lkLKmMnNrRoO]");
 
-    private static final Map<String, String> colorCodes = new HashMap<>() {
-        {
-            put("&0", "<black>");
-            put("&1", "<dark_blue>");
-            put("&2", "<dark_green>");
-            put("&3", "<dark_aqua>");
-            put("&4", "<dark_red>");
-            put("&5", "<dark_purple>");
-            put("&6", "<gold>");
-            put("&7", "<gray>");
-            put("&8", "<dark_gray>");
-            put("&9", "<blue>");
-            put("&a", "<green>");
-            put("&b", "<aqua>");
-            put("&c", "<red>");
-            put("&d", "<light_purple>");
-            put("&e", "<yellow>");
-            put("&f", "<white>");
-            put("&k", "<obfuscated>");
-            put("&l", "<bold>");
-            put("&m", "<strikethrough>");
-            put("&n", "<underlined>");
-            put("&o", "<italic>");
-            put("&r", "<reset>");
-        }
-    };
+    private static final Map<String, String> colorCodes = new HashMap<>();
+    static {
+        colorCodes.put("&0", "<black>");
+        colorCodes.put("&1", "<dark_blue>");
+        colorCodes.put("&2", "<dark_green>");
+        colorCodes.put("&3", "<dark_aqua>");
+        colorCodes.put("&4", "<dark_red>");
+        colorCodes.put("&5", "<dark_purple>");
+        colorCodes.put("&6", "<gold>");
+        colorCodes.put("&7", "<gray>");
+        colorCodes.put("&8", "<dark_gray>");
+        colorCodes.put("&9", "<blue>");
+        colorCodes.put("&a", "<green>");
+        colorCodes.put("&b", "<aqua>");
+        colorCodes.put("&c", "<red>");
+        colorCodes.put("&d", "<light_purple>");
+        colorCodes.put("&e", "<yellow>");
+        colorCodes.put("&f", "<white>");
+        colorCodes.put("&k", "<obfuscated>");
+        colorCodes.put("&l", "<bold>");
+        colorCodes.put("&m", "<strikethrough>");
+        colorCodes.put("&n", "<underlined>");
+        colorCodes.put("&o", "<italic>");
+        colorCodes.put("&r", "<reset>");
+    }
 
     /*
-     * Translates color codes in a string to components This supports HEX color
-     * codes and the old Minecraft color codes
+     * Translates color codes in a string to components This supports HEX
+     * color codes and the old Minecraft color codes
      * 
      * @param message The message to translate
      */

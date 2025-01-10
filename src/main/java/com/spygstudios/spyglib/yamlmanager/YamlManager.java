@@ -41,7 +41,7 @@ public abstract class YamlManager {
      * @param fileName a {@link java.lang.String} object
      * @param plugin   a {@link org.bukkit.plugin.java.JavaPlugin} object
      */
-    public YamlManager(String fileName, JavaPlugin plugin) {
+    protected YamlManager(String fileName, JavaPlugin plugin) {
         this.filename = fileName;
         this.plugin = plugin;
         this.configFile = new File(plugin.getDataFolder(), fileName);
@@ -80,8 +80,8 @@ public abstract class YamlManager {
     }
 
     /**
-     * Gets the configuration. If the configuration is null, it reloads the
-     * configuration.
+     * Gets the configuration. If the configuration is null, it reloads
+     * the configuration.
      *
      * @return the configuration
      */
@@ -114,7 +114,8 @@ public abstract class YamlManager {
      * 
      * @param node         The node to get the value from
      * 
-     * @param defaultValue The default value to return if the node is not found
+     * @param defaultValue The default value to return if the node is not
+     *                     found
      */
     /**
      * <p>
@@ -151,7 +152,8 @@ public abstract class YamlManager {
      * 
      * @param node         The node to get the value from
      * 
-     * @param defaultValue The default value to return if the node is not found
+     * @param defaultValue The default value to return if the node is not
+     *                     found
      */
     /**
      * <p>
@@ -188,7 +190,8 @@ public abstract class YamlManager {
      * 
      * @param node         The node to get the value from
      * 
-     * @param defaultValue The default value to return if the node is not found
+     * @param defaultValue The default value to return if the node is not
+     *                     found
      */
     /**
      * <p>
@@ -244,7 +247,8 @@ public abstract class YamlManager {
      * 
      * @param node         The node to get the value from
      * 
-     * @param defaultValue The default value to return if the node is not found
+     * @param defaultValue The default value to return if the node is not
+     *                     found
      */
     /**
      * <p>
@@ -281,7 +285,8 @@ public abstract class YamlManager {
      * 
      * @param node         The node to get the value from
      * 
-     * @param defaultValue The default value to return if the node is not found
+     * @param defaultValue The default value to return if the node is not
+     *                     found
      */
     /**
      * <p>
@@ -348,7 +353,8 @@ public abstract class YamlManager {
      * </p>
      *
      * @param node a {@link java.lang.String} object
-     * @return a {@link org.bukkit.configuration.ConfigurationSection} object
+     * @return a {@link org.bukkit.configuration.ConfigurationSection}
+     *         object
      */
     public ConfigurationSection getConfigurationSection(String node) {
         return getConfig().getConfigurationSection(node);
@@ -365,7 +371,8 @@ public abstract class YamlManager {
      * </p>
      *
      * @param node a {@link java.lang.String} object
-     * @return a {@link org.bukkit.configuration.ConfigurationSection} object
+     * @return a {@link org.bukkit.configuration.ConfigurationSection}
+     *         object
      */
     public ConfigurationSection createSection(String node) {
         return getConfig().createSection(node);
@@ -462,7 +469,8 @@ public abstract class YamlManager {
      * </p>
      *
      * @param fileName a {@link java.lang.String} object
-     * @return a {@link com.spygstudios.spyglib.yamlmanager.YamlManager} object
+     * @return a {@link com.spygstudios.spyglib.yamlmanager.YamlManager}
+     *         object
      */
     public static YamlManager getYamlManager(String fileName) {
         for (YamlManager yamlManager : yamlManagers) {
