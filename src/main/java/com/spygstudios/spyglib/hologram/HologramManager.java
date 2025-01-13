@@ -1,13 +1,11 @@
 package com.spygstudios.spyglib.hologram;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Location;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -44,15 +42,7 @@ public class HologramManager implements Listener {
     }
 
     private int getEntityTrackingRange() {
-        int dist = 64;
-        try {
-            Class<?> spigotConfigClass = Class.forName("org.spigotmc.SpigotConfig");
-            Field configField = spigotConfigClass.getDeclaredField("config");
-            configField.setAccessible(true);
-            YamlConfiguration config = (YamlConfiguration) configField.get(null);
-            dist = config.getInt("world-settings.default.entity-tracking-range.players", 64);
-        } catch (Exception e) {
-        }
+        int dist = plugin.getServer().spigot().getSpigotConfig().getInt("world-settings.default.entity-tracking-range.players", 64);
         return Math.min(plugin.getServer().getViewDistance() * 16, dist);
     }
 

@@ -102,6 +102,7 @@ public class Hologram {
     public HologramRow addRow(Component text) {
         HologramRow row = new HologramTextRow(this, location.clone().add(0, -rows.size() * LINE_DISTANCE, 0), text);
         rows.add(row);
+        update();
         return row;
     }
 
@@ -117,6 +118,7 @@ public class Hologram {
     public HologramRow addRow(ItemStack item) {
         HologramRow row = new HologramItemRow(this, location.clone().add(0, -rows.size() * LINE_DISTANCE, 0), item);
         rows.add(row);
+        update();
         return row;
     }
 
@@ -218,7 +220,7 @@ public class Hologram {
     private void update() {
         for (int i = 0; i < rows.size(); i++) {
             HologramRow r = rows.get(i);
-            r.teleport(location.clone().add(0, -i * LINE_DISTANCE, 0));
+            r.teleport(location.clone().add(0, (rows.size() - i) * LINE_DISTANCE, 0));
         }
     }
 
