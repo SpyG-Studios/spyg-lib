@@ -1,13 +1,5 @@
 package com.spygstudios.spyglib.hologram;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -16,7 +8,32 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+
+/**
+ * <p>
+ * HoloUtils class.
+ * </p>
+ *
+ * @author Koponya
+ * @version $Id: $Id
+ */
 public class HoloUtils {
+    /**
+     * <p>
+     * sendPacket.
+     * </p>
+     *
+     * @param player a {@link org.bukkit.entity.Player} object
+     * @param packet a {@link java.lang.Object} object
+     * @throws java.lang.Exception if any.
+     */
     public static void sendPacket(Player player, Object packet) throws Exception {
         try {
             // classic NMS
@@ -26,7 +43,8 @@ public class HoloUtils {
             Method sendPacket = playerConnection.getClass().getMethod("a", getNMSClass("network.protocol.Packet"));
             sendPacket.invoke(playerConnection, packet);
             return;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         // Mojang mappings
         Object nmsPlayer = getHandle(player);
         Field playerConnectionField = nmsPlayer.getClass().getField("connection");
@@ -35,16 +53,43 @@ public class HoloUtils {
         sendPacket.invoke(playerConnection, packet);
     }
 
+    /**
+     * <p>
+     * getHandle.
+     * </p>
+     *
+     * @param player a {@link org.bukkit.entity.Player} object
+     * @return a {@link java.lang.Object} object
+     * @throws java.lang.Exception if any.
+     */
     public static Object getHandle(Player player) throws Exception {
         Method getHandle = player.getClass().getMethod("getHandle");
         return getHandle.invoke(player);
     }
 
+    /**
+     * <p>
+     * getNMSWorld.
+     * </p>
+     *
+     * @param world a {@link org.bukkit.World} object
+     * @return a {@link java.lang.Object} object
+     * @throws java.lang.Exception if any.
+     */
     public static Object getNMSWorld(org.bukkit.World world) throws Exception {
         Method getHandle = world.getClass().getMethod("getHandle");
         return getHandle.invoke(world);
     }
 
+    /**
+     * <p>
+     * getNMSClass.
+     * </p>
+     *
+     * @param name a {@link java.lang.String} object
+     * @return a {@link java.lang.Class} object
+     * @throws java.lang.ClassNotFoundException if any.
+     */
     public static Class<?> getNMSClass(String name) throws ClassNotFoundException {
         String[] server = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
         if (server.length > 3) {
@@ -53,7 +98,15 @@ public class HoloUtils {
         }
         return Class.forName("net.minecraft." + name);
     }
-    
+
+    /**
+     * <p>
+     * getWorldClass.
+     * </p>
+     *
+     * @return a {@link java.lang.Class} object
+     * @throws java.lang.ClassNotFoundException if any.
+     */
     public static Class<?> getWorldClass() throws ClassNotFoundException {
         String[] server = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
         if (server.length > 3) {
@@ -63,15 +116,43 @@ public class HoloUtils {
         return Class.forName("net.minecraft.world.level.Level");
     }
 
+    /**
+     * <p>
+     * setInvisible.
+     * </p>
+     *
+     * @param entity    a {@link java.lang.Object} object
+     * @param invisible a boolean
+     * @throws java.lang.Exception if any.
+     */
     public static void setInvisible(Object entity, boolean invisible) throws Exception {
         Method setInvisible = entity.getClass().getMethod("setInvisible", boolean.class);
         setInvisible.invoke(entity, invisible);
     }
 
+    /**
+     * <p>
+     * setCustomName.
+     * </p>
+     *
+     * @param entity a {@link java.lang.Object} object
+     * @param name   a {@link java.lang.String} object
+     * @throws java.lang.Exception if any.
+     */
     public static void setCustomName(Object entity, String name) throws Exception {
         setCustomName(entity, Component.text(name));
     }
 
+    /**
+     * <p>
+     * setCustomName.
+     * </p>
+     *
+     * @param entity    a {@link java.lang.Object} object
+     * @param component a {@link net.kyori.adventure.text.Component}
+     *                  object
+     * @throws java.lang.Exception if any.
+     */
     public static void setCustomName(Object entity, Component component) throws Exception {
         try {
             String json = GsonComponentSerializer.gson().serialize(component);
@@ -86,36 +167,75 @@ public class HoloUtils {
 
             setCustomName.invoke(entity, chatComponentText);
             setCustomNameVisible.invoke(entity, true);
-            return;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * <p>
+     * createArrayList.
+     * </p>
+     *
+     * @param clazz a {@link java.lang.Class} object
+     * @return a {@link java.util.ArrayList} object
+     * @throws java.lang.Exception if any.
+     */
     public static ArrayList<?> createArrayList(Class<?> clazz) throws Exception {
         return new ArrayList<>();
     }
 
+    /**
+     * <p>
+     * setInvulnerable.
+     * </p>
+     *
+     * @param entity       a {@link java.lang.Object} object
+     * @param invulnerable a boolean
+     * @throws java.lang.Exception if any.
+     */
     public static void setInvulnerable(Object entity, boolean invulnerable) throws Exception {
         Method setInvulnerable = entity.getClass().getMethod("setInvulnerable", boolean.class);
         setInvulnerable.invoke(entity, invulnerable);
     }
 
+    /**
+     * <p>
+     * setNoGravity.
+     * </p>
+     *
+     * @param entity    a {@link java.lang.Object} object
+     * @param noGravity a boolean
+     * @throws java.lang.Exception if any.
+     */
     public static void setNoGravity(Object entity, boolean noGravity) throws Exception {
         Method setNoGravity = entity.getClass().getMethod("setNoGravity", boolean.class);
         setNoGravity.invoke(entity, noGravity);
     }
 
+    /**
+     * Set the item of a hologram row
+     *
+     * @param entity a {@link java.lang.Object} object
+     * @param item   a {@link org.bukkit.inventory.ItemStack} object
+     * @throws java.lang.Exception
+     */
     public static void setItem(Object entity, org.bukkit.inventory.ItemStack item) throws Exception {
         try {
             Method setItem = entity.getClass().getMethod("setItem", getNMSClass("world.item.ItemStack"));
             setItem.invoke(entity, getNMSItemStack(item));
-            return;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Get the NMS ItemStack from a Bukkit ItemStack
+     *
+     * @param itemStack a {@link org.bukkit.inventory.ItemStack} object
+     * @throws java.lang.Exception
+     * @return a {@link java.lang.Object} object
+     */
     public static Object getNMSItemStack(ItemStack itemStack) throws Exception {
         try {
             Class<?> craftItemStack = Class.forName("org.bukkit.craftbukkit.inventory.CraftItemStack");
@@ -127,6 +247,14 @@ public class HoloUtils {
         }
     }
 
+    /**
+     * Set the location of an entity and update the viewers
+     *
+     * @param entity   a {@link java.lang.Object} object
+     * @param location a {@link org.bukkit.Location} object
+     * @param viewers  a {@link java.util.List} object
+     * @throws java.lang.Exception
+     */
     public static void setLocation(Object entity, Location location, List<Player> viewers) throws Exception {
         Class<?> vec3Class = getNMSClass("world.phys.Vec3");
         Object pos = vec3Class.getConstructor(double.class, double.class, double.class).newInstance(location.getX(), location.getY(), location.getZ());
@@ -140,14 +268,21 @@ public class HoloUtils {
         }
     }
 
-
+    /**
+     * Create a packet to spawn an entity
+     *
+     * @param entity a {@link java.lang.Object} object
+     * @throws java.lang.Exception
+     * @return a {@link java.lang.Object} object
+     */
     public static Object createPacket(Object entity) throws Exception {
         try {
             // classic NMS
             Class<?> packetPlayOutSpawnEntityLiving = getNMSClass("network.protocol.game.PacketPlayOutSpawnEntityLiving");
             Constructor<?> packetConstructor = packetPlayOutSpawnEntityLiving.getConstructor(getNMSClass("world.entity.EntityLiving"));
             return packetConstructor.newInstance(entity);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         // Mojang mappings
         int entityId = (int) entity.getClass().getMethod("getId").invoke(entity);
         UUID uuid = (UUID) entity.getClass().getMethod("getUUID").invoke(entity);
@@ -159,26 +294,33 @@ public class HoloUtils {
         Object entityType = entity.getClass().getMethod("getType").invoke(entity);
         Class<?> vec3Class = getNMSClass("world.phys.Vec3");
         Class<?> packetClass = getNMSClass("network.protocol.game.ClientboundAddEntityPacket");
-        Constructor<?> packetConstructor = packetClass.getConstructor(int.class, UUID.class, double.class, double.class, double.class, float.class, float.class, entityTypeClass, int.class, vec3Class, double.class);
+        Constructor<?> packetConstructor = packetClass.getConstructor(int.class, UUID.class, double.class, double.class, double.class, float.class, float.class, entityTypeClass, int.class, vec3Class,
+                double.class);
         Object vec = vec3Class.getConstructor(double.class, double.class, double.class).newInstance(0.0, 0.0, 0.0);
 
-        Object packet = packetConstructor.newInstance(entityId, uuid, x, y, z, 0f, 0f, entityType, 0, vec, 0.0);
-        return packet;
+        return packetConstructor.newInstance(entityId, uuid, x, y, z, 0f, 0f, entityType, 0, vec, 0.0);
     }
 
+    /**
+     * Create a packet to destroy an entity
+     *
+     * @param entity a {@link java.lang.Object} object
+     * @throws java.lang.Exception
+     * @return a {@link java.lang.Object} object
+     */
     public static Object destroyPacket(Object entity) throws Exception {
         try {
             // classic NMS
             Class<?> packetPlayOutEntityDestroy = getNMSClass("network.protocol.game.PacketPlayOutEntityDestroy");
             Constructor<?> packetConstructor = packetPlayOutEntityDestroy.getConstructor(int[].class);
             return packetConstructor.newInstance(new int[] { (int) entity.getClass().getMethod("getId").invoke(entity) });
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         // Mojang mappings
         int entityId = (int) entity.getClass().getMethod("getId").invoke(entity);
         Class<?> packetClass = getNMSClass("network.protocol.game.ClientboundRemoveEntitiesPacket");
         Constructor<?> packetConstructor = packetClass.getDeclaredConstructor(int[].class);
         return packetConstructor.newInstance(new int[] { entityId });
     }
-
 
 }
