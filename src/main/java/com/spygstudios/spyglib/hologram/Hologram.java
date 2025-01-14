@@ -133,7 +133,9 @@ public class Hologram {
         if (index < 0 || index >= rows.size()) {
             throw new IllegalArgumentException("Index out of bounds");
         }
+        HologramRow row = rows.get(index);
         rows.remove(index);
+        row.remove();
         update();
     }
 

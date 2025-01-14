@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,6 +36,7 @@ public class HologramManager implements Listener {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         entityTrackingRange = getEntityTrackingRange();
+        Bukkit.getScheduler().runTaskTimer(plugin, this::syncHologramLocations, 20L, 20L);
     }
 
     JavaPlugin getPlugin() {
@@ -163,4 +165,11 @@ public class HologramManager implements Listener {
         }
         return new HologramManager(plugin);
     }
+
+    private void syncHologramLocations() {
+        for (Hologram hologram : holograms) {
+            hologram.teleport(hologram.getLocation());
+        }
+    }
+
 }

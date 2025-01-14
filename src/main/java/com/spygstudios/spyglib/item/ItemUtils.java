@@ -3,7 +3,9 @@ package com.spygstudios.spyglib.item;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.spygstudios.spyglib.color.TranslateColor;
@@ -17,6 +19,22 @@ import com.spygstudios.spyglib.color.TranslateColor;
  * @version $Id: $Id
  */
 public class ItemUtils {
+
+
+    /**
+     * Checks if the player has the specified item in their hand
+     *
+     * @param player a {@link org.bukkit.entity.Player} object
+     * @param item a {@link org.bukkit.Material} object
+     * @return a boolean
+     */
+    public static boolean hasItemInHand(Player player, Material item) {
+        PlayerInventory inv = player.getInventory();
+        return (
+            inv.getItemInMainHand().getType().equals(item) ||
+            inv.getItemInOffHand().getType().equals(item)
+        );
+    }
 
     /**
      * Creates an ItemStack with the specified material, displayname,
