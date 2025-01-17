@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -187,6 +188,19 @@ public class HoloUtils {
 
     /**
      * <p>
+     * createSet.
+     * </p>
+     *
+     * @param clazz a {@link java.lang.Class} object
+     * @return a {@link java.util.Set} object
+     * @throws java.lang.Exception if any.
+     */
+    public static Set<?> createSet(Class<?> clazz) throws Exception {
+        return Set.of();
+    }
+
+    /**
+     * <p>
      * setInvulnerable.
      * </p>
      *
@@ -259,13 +273,35 @@ public class HoloUtils {
         Class<?> vec3Class = getNMSClass("world.phys.Vec3");
         Object pos = vec3Class.getConstructor(double.class, double.class, double.class).newInstance(location.getX(), location.getY(), location.getZ());
         Method setPosition = entity.getClass().getMethod("moveTo", vec3Class);
+        Method setVelocity = entity.getClass().getMethod("setDeltaMovement", vec3Class);
+        setVelocity.invoke(entity, vec3Class.getField("ZERO").get(null));
         setPosition.invoke(entity, pos);
         for (Player viewer : viewers) {
-            Class<?> packetClass = getNMSClass("network.protocol.game.ClientboundTeleportEntityPacket");
-            Constructor<?> packetConstructor = packetClass.getDeclaredConstructor(getNMSClass("world.entity.Entity"));
-            Object packet = packetConstructor.newInstance(entity);
-            sendPacket(viewer, packet);
+            createTeleportPacket(entity, viewer);
         }
+    }
+
+    private static void createTeleportPacket(Object entity, Player viewer) throws Exception {
+        Class<?> packetClass = getNMSClass("network.protocol.game.ClientboundTeleportEntityPacket");
+        Object packet;
+        try {
+            Constructor<?> packetConstructor = packetClass.getDeclaredConstructor(getNMSClass("world.entity.Entity"));
+            packet = packetConstructor.newInstance(entity);
+        } catch (Exception e) {
+            try {
+                // packet = int id, PositionMoveRotation change, Set<Relative>
+                // relatives, boolean onGround
+                Class<?> positionMoveRotationClass = getNMSClass("world.entity.PositionMoveRotation");
+                Class<?> entityClass = getNMSClass("world.entity.Entity");
+                Constructor<?> packetConstructor = packetClass.getDeclaredConstructor(int.class, positionMoveRotationClass, Set.class, boolean.class);
+                Method ofMethod = positionMoveRotationClass.getMethod("of", entityClass);
+                packet = packetConstructor.newInstance(entity.getClass().getMethod("getId").invoke(entity), ofMethod.invoke(null, entity), createSet(packetClass), false);
+            } catch (Exception e2) {
+                throw new Exception("Failed to create teleport packet, contact the developers!", e);
+            }
+        }
+
+        sendPacket(viewer, packet);
     }
 
     /**
