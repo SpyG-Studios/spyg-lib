@@ -44,7 +44,7 @@ public class HologramManager implements Listener {
     }
 
     private int getEntityTrackingRange() {
-        int dist = plugin.getServer().spigot().getSpigotConfig().getInt("world-settings.default.entity-tracking-range.players", 64);
+        int dist = plugin.getServer().spigot().getConfig().getInt("world-settings.default.entity-tracking-range.players", 64);
         return Math.min(plugin.getServer().getViewDistance() * 16, dist);
     }
 
