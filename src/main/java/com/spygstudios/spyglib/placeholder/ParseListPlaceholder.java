@@ -10,7 +10,7 @@ import java.util.Map.Entry;
  * ParseListPlaceholder class.
  * </p>
  *
- * @author Peter
+ * @author ikoli
  * @version $Id: $Id
  */
 public class ParseListPlaceholder {

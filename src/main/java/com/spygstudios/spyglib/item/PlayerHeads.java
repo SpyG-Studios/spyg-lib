@@ -26,7 +26,7 @@ import com.google.gson.JsonParser;
  * PlayerHeads class.
  * </p>
  *
- * @author Peter
+ * @author ikoli
  * @version $Id: $Id
  */
 public class PlayerHeads {

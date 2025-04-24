@@ -12,7 +12,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
  * ComponentUtils class.
  * </p>
  *
- * @author Ris
+ * @author ikoli
  * @version $Id: $Id
  */
 public class ComponentUtils {

@@ -10,8 +10,21 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 
+/**
+ * <p>VersionChecker class.</p>
+ *
+ * @author ikoli
+ * @version $Id: $Id
+ */
 public class VersionChecker {
 
+    /**
+     * <p>isLatestVersion.</p>
+     *
+     * @param apiUrl a {@link java.lang.String} object
+     * @param currentVersion a {@link java.lang.String} object
+     * @return a {@link java.util.Map.Entry} object
+     */
     public static Entry<String, Boolean> isLatestVersion(String apiUrl, String currentVersion) {
         try {
             String latestVersion = fetchLatestVersion(apiUrl);
@@ -20,7 +33,7 @@ public class VersionChecker {
                 return Map.entry(latestVersion, false);
             }
         } catch (Exception e) {
-            Bukkit.getLogger().warning("Nem sikerült lekérni a verzióadatokat: " + e.getMessage());
+            Bukkit.getLogger().warning("Unable to get version data: " + e.getMessage());
         }
         return Map.entry(currentVersion, true);
     }

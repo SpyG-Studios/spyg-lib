@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * <p>
@@ -286,5 +287,58 @@ public class InventoryUtils {
      */
     public static int countItems(Player player, Material material) {
         return countItems(player.getInventory(), material);
+    }
+    /*
+     * Counts the amount of a certain item in the inventory
+     * 
+     * @param inventory The inventory to count the item for
+     * 
+     * @param itemstack The itemstack to count
+     * 
+     * @return The amount of the item in the inventory
+     *
+     */
+    /**
+     * <p>
+     * countItems.
+     * </p>
+     *
+     * @param inventory a {@link org.bukkit.inventory.Inventory} object
+     * @param itemMeta  a {@link org.bukkit.inventory.meta.ItemMeta} object
+     * @return a int
+     */
+    public static int countItems(Inventory inventory, ItemMeta itemMeta) {
+        int count = 0;
+
+        for (ItemStack item : inventory.getContents()) {
+            if (item != null && item.getItemMeta().equals(itemMeta) ) {
+                count += item.getAmount();
+            }
+        }
+
+        return count;
+    }
+
+    /*
+     * Counts the amount of a certain item in the player's inventory
+     * 
+     * @param player The player to count the item for
+     * 
+     * @param material The material to count
+     * 
+     * @return The amount of the item in the player's inventory
+     *
+     */
+    /**
+     * <p>
+     * countItems.
+     * </p>
+     *
+     * @param player   a {@link org.bukkit.entity.Player} object
+     * @param itemMeta a {@link org.bukkit.inventory.meta.ItemMeta} object
+     * @return a int
+     */
+    public static int countItems(Player player, ItemMeta itemMeta) {
+        return countItems(player.getInventory(), itemMeta);
     }
 }

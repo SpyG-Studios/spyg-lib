@@ -13,7 +13,7 @@ import com.spygstudios.spyglib.color.TranslateColor;
  * BroadcastMessage class.
  * </p>
  *
- * @author Peter
+ * @author ikoli
  * @version $Id: $Id
  */
 public class BroadcastMessage {
