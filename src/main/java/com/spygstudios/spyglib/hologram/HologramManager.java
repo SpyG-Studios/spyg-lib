@@ -108,7 +108,7 @@ public class HologramManager implements Listener {
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
         for (Hologram hologram : holograms) {
-            if (event.getPlayer().getWorld().equals(hologram.getLocation().getWorld()) || event.getFrom().getWorld().equals(hologram.getLocation().getWorld())) {
+            if (event.getTo().getWorld().equals(hologram.getLocation().getWorld())) {
                 hologram.update(event.getPlayer());
             }
         }

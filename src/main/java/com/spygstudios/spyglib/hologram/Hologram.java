@@ -190,11 +190,14 @@ public class Hologram {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null");
         }
-        if (!player.getWorld().equals(location.getWorld()) && viewers.contains(player) || !player.isOnline()) {
+        if ((!player.getWorld().equals(location.getWorld()) || !player.isOnline()) && viewers.contains(player)) {
             viewers.remove(player);
             for (HologramRow row : rows) {
                 row.hide(player);
             }
+            return;
+        }
+        if (!player.getWorld().equals(location.getWorld()) ) {
             return;
         }
         double distSqrt = player.getLocation().distanceSquared(location);
