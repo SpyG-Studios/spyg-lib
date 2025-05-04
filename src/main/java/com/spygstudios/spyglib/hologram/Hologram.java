@@ -190,16 +190,12 @@ public class Hologram {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null");
         }
-        if ((!player.getWorld().equals(location.getWorld()) || !player.isOnline()) && viewers.contains(player)) {
-            viewers.remove(player);
-            for (HologramRow row : rows) {
-                row.hide(player);
-            }
+
+        if (!player.getWorld().equals(location.getWorld()) || !player.isOnline()) {
+            removeViewer(player);
             return;
         }
-        if (!player.getWorld().equals(location.getWorld()) ) {
-            return;
-        }
+
         double distSqrt = player.getLocation().distanceSquared(location);
         if (distSqrt <= viewDistance * viewDistance) {
             if (!viewers.contains(player)) {
@@ -208,7 +204,13 @@ public class Hologram {
                     row.show(player);
                 }
             }
-        } else if (viewers.contains(player)) {
+        } else {
+            removeViewer(player);
+        }
+    }
+
+    public void removeViewer(Player player) {
+        if (viewers.contains(player)) {
             viewers.remove(player);
             for (HologramRow row : rows) {
                 row.hide(player);

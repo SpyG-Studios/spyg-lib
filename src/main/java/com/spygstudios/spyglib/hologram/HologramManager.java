@@ -126,7 +126,7 @@ public class HologramManager implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         for (Hologram hologram : holograms) {
             if (event.getPlayer().getWorld().equals(hologram.getLocation().getWorld())) {
-                hologram.update(event.getPlayer());
+                hologram.removeViewer(event.getPlayer());
             }
         }
     }
