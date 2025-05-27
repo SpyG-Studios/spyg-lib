@@ -227,6 +227,9 @@ public class Hologram {
     private void update() {
         for (int i = 0; i < rows.size(); i++) {
             HologramRow r = rows.get(i);
+            if (!location.getChunk().isLoaded()) {
+                continue;
+            }
             r.teleport(location.clone().add(0, (rows.size() - i) * LINE_DISTANCE, 0));
         }
     }
