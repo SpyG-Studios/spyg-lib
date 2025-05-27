@@ -45,7 +45,7 @@ public class TranslateColor {
         colorCodes.put("&m", "<strikethrough>");
         colorCodes.put("&n", "<underlined>");
         colorCodes.put("&o", "<italic>");
-        colorCodes.put("&r", "<reset>");
+        colorCodes.put("&r", "<reset><!i>");
     }
 
     /*
@@ -66,22 +66,51 @@ public class TranslateColor {
         if (message == null) {
             throw new IllegalArgumentException("Argument for method color(String) cannot be null!");
         }
+
+        StringBuilder result = new StringBuilder();
         Matcher match = pattern.matcher(message);
+        int lastAppendPosition = 0;
+        boolean hasBold = false;
+
         while (match.find()) {
             int charPos = match.start() - 1;
             if (charPos >= 0 && message.charAt(charPos) == '&') {
-                String color = message.substring(match.start(), match.end());
-                message = message.replace("&" + color, "<" + color + ">");
-                match = pattern.matcher(message);
+                String color = match.group();
+                String replacement = "<" + color + ">";
+                if (!hasBold && color.equals("bold")) {
+                    hasBold = true;
+                } else if (hasBold) {
+                    replacement = "<!b>" + replacement;
+                }
+
+                result.append(message, lastAppendPosition, charPos);
+                result.append(replacement);
+                lastAppendPosition = match.end();
             }
         }
+        result.append(message.substring(lastAppendPosition));
+        message = result.toString();
+
+        StringBuilder finalResult = new StringBuilder();
         Matcher matchOld = oldPattern.matcher(message);
+        lastAppendPosition = 0;
+
         while (matchOld.find()) {
-            String color = message.substring(matchOld.start(), matchOld.end());
-            message = message.replace(color, colorCodes.get(color));
-            matchOld = oldPattern.matcher(message);
+            String color = matchOld.group();
+            String replacement = colorCodes.get(color);
+            if (!hasBold && color.equals("&l")) {
+                hasBold = true;
+            } else if (hasBold) {
+                replacement = "<!b>" + replacement;
+            }
+
+            finalResult.append(message, lastAppendPosition, matchOld.start());
+            finalResult.append(replacement);
+            lastAppendPosition = matchOld.end();
         }
-        return ComponentUtils.toComponent("<!i>" + message);
+        finalResult.append(message.substring(lastAppendPosition));
+
+        return ComponentUtils.toComponent("<!i>" + finalResult.toString());
     }
 
     /*
