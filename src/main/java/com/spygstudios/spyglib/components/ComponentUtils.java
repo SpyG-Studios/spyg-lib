@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 /**
@@ -49,7 +50,10 @@ public class ComponentUtils {
      * @return a {@link java.lang.String} object
      */
     public static String fromComponent(Component component) {
-        return MiniMessage.miniMessage().serialize(component);
+        if (!(component instanceof TextComponent textComponent)) {
+            throw new IllegalArgumentException("Component must be a TextComponent");
+        }
+        return textComponent.content();
     }
 
     /*
