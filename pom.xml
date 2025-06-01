@@ -9,7 +9,7 @@
     <version>1.1.8</version>
     <url>https://github.com/SpyG-Studios/spyg-lib</url>
     <description>A lightweight library for Spyg plugins.</description>
-
+    <name>SpgyLib</name>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
