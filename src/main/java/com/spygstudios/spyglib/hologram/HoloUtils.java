@@ -272,9 +272,14 @@ public class HoloUtils {
     public static void setLocation(Object entity, Location location, List<Player> viewers) throws Exception {
         Class<?> vec3Class = getNMSClass("world.phys.Vec3");
         Object pos = vec3Class.getConstructor(double.class, double.class, double.class).newInstance(location.getX(), location.getY(), location.getZ());
-        Method setPosition = entity.getClass().getMethod("moveTo", vec3Class);
         Method setVelocity = entity.getClass().getMethod("setDeltaMovement", vec3Class);
         setVelocity.invoke(entity, vec3Class.getField("ZERO").get(null));
+        Method setPosition;
+        try {
+            setPosition = entity.getClass().getMethod("moveTo", vec3Class);
+        } catch (NoSuchMethodException e) {
+            setPosition = entity.getClass().getMethod("snapTo", vec3Class);
+        }
         setPosition.invoke(entity, pos);
         for (Player viewer : viewers) {
             createTeleportPacket(entity, viewer);
