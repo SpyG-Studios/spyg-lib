@@ -56,8 +56,8 @@ public class HologramManager implements Listener {
      * @param location a {@link org.bukkit.Location} object
      * @return a {@link com.spygstudios.spyglib.hologram.Hologram} object
      */
-    public Hologram createHologram(Location location) {
-        Hologram hologram = new Hologram(this, location, entityTrackingRange);
+    public Hologram createHologram(Location location, int hologramRange) {
+        Hologram hologram = new Hologram(this, location, Math.min(entityTrackingRange, hologramRange));
         holograms.add(hologram);
         return hologram;
     }
