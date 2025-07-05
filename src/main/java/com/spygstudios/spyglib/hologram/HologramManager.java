@@ -158,6 +158,9 @@ public class HologramManager implements Listener {
             return;
         }
         for (Hologram hologram : new ArrayList<>(holograms)) {
+            if (hologram == null) {
+                continue;
+            }
             hologram.remove();
         }
         managers.remove(plugin);
