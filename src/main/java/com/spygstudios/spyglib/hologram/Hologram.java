@@ -230,7 +230,7 @@ public class Hologram {
             if (r == null) {
                 continue;
             }
-            if (!location.getChunk().isLoaded()) {
+            if (!location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {
                 continue;
             }
             r.teleport(location.clone().add(0, (rows.size() - i) * LINE_DISTANCE, 0));
