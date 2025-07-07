@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -159,14 +158,9 @@ public class HoloUtils {
             String json = GsonComponentSerializer.gson().serialize(component);
             Method setCustomName = entity.getClass().getMethod("setCustomName", getNMSClass("network.chat.Component"));
             Method setCustomNameVisible = entity.getClass().getMethod("setCustomNameVisible", boolean.class);
-            Class<?> providerClass = getNMSClass("core.HolderLookup$Provider");
-            Method createMethod = providerClass.getMethod("create", Stream.class);
-            Class<?> registryLookupClass = getNMSClass("core.HolderLookup$RegistryLookup");
-            Object provider = createMethod.invoke(null, createArrayList(registryLookupClass).stream());
-            Method fromJsonMethod = getNMSClass("network.chat.Component$Serializer").getMethod("fromJson", String.class, providerClass);
-            Object chatComponentText = fromJsonMethod.invoke(null, json, provider);
+            Method fromJsonMethod = Class.forName("org.bukkit.craftbukkit.util.CraftChatMessage").getMethod("fromJSON", String.class);
 
-            setCustomName.invoke(entity, chatComponentText);
+            setCustomName.invoke(entity, fromJsonMethod.invoke(null, json));
             setCustomNameVisible.invoke(entity, true);
         } catch (Exception e) {
             e.printStackTrace();

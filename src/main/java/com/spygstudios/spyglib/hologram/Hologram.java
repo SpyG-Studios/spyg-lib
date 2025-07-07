@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 
 /**
@@ -25,7 +26,10 @@ public class Hologram {
     private Location location;
     private final List<HologramRow> rows = new ArrayList<>();
     private final List<Player> viewers = new ArrayList<>();
-    private final int viewDistance;
+    @Setter
+    private int viewDistance;
+    @Setter
+    private boolean hideBehindBlocks;
 
     /**
      * <p>
@@ -38,10 +42,11 @@ public class Hologram {
      * @param location     a {@link org.bukkit.Location} object
      * @param viewDistance a int
      */
-    public Hologram(HologramManager manager, Location location, int viewDistance) {
+    public Hologram(HologramManager manager, Location location, int viewDistance, boolean hideBehindBlocks) {
         this.manager = manager;
         this.location = location;
         this.viewDistance = viewDistance;
+        this.hideBehindBlocks = hideBehindBlocks;
         for (Player player : location.getWorld().getPlayers()) {
             update(player);
         }
@@ -197,7 +202,9 @@ public class Hologram {
         }
 
         double distSqrt = player.getLocation().distanceSquared(location);
-        if (distSqrt <= viewDistance * viewDistance) {
+        boolean canSee = hideBehindBlocks ? player.hasLineOfSight(location.clone().add(0, rows.size() * LINE_DISTANCE, 0)) : true;
+
+        if (distSqrt <= Math.pow(viewDistance, 2) && canSee) {
             if (!viewers.contains(player)) {
                 viewers.add(player);
                 for (HologramRow row : rows) {
