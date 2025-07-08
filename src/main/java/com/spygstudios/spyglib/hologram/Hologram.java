@@ -20,7 +20,7 @@ import net.kyori.adventure.text.Component;
  */
 public class Hologram {
     /** Constant <code>LINE_DISTANCE=0.25d</code> */
-    public static final double LINE_DISTANCE = 0.25d;
+    public static final double LINE_DISTANCE = 0.28d;
 
     private final HologramManager manager;
     private Location location;
@@ -202,9 +202,7 @@ public class Hologram {
         }
 
         double distSqrt = player.getLocation().distanceSquared(location);
-        boolean canSee = hideBehindBlocks ? player.hasLineOfSight(location.clone().add(0, rows.size() * LINE_DISTANCE, 0)) : true;
-
-        if (distSqrt <= Math.pow(viewDistance, 2) && canSee) {
+        if (distSqrt <= Math.pow(viewDistance, 2)) {
             if (!viewers.contains(player)) {
                 viewers.add(player);
                 for (HologramRow row : rows) {
@@ -237,10 +235,11 @@ public class Hologram {
             if (r == null) {
                 continue;
             }
-            if (!location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {
-                continue;
-            }
-            r.teleport(location.clone().add(0, (rows.size() - i) * LINE_DISTANCE, 0));
+            // if (!location.getWorld().isChunkLoaded(location.getBlockX() >> 4,
+            // location.getBlockZ() >> 4)) {
+            // continue;
+            // }
+            // r.teleport(location.clone().add(0, (rows.size() - i) * LINE_DISTANCE, 0));
         }
     }
 

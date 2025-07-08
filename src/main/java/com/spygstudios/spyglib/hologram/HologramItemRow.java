@@ -17,9 +17,10 @@ import org.bukkit.inventory.ItemStack;
  */
 public class HologramItemRow extends HologramRow {
     private final Hologram hologram;
+    private static final double HEIGHT_OFFSET = 1d; // Adjusted height offset for item rows
     private Location location;
     private ItemStack item;
-    private Object armorStand;
+    private Object textDisplay;
 
     /**
      * <p>
@@ -33,7 +34,7 @@ public class HologramItemRow extends HologramRow {
      */
     public HologramItemRow(Hologram hologram, Location location, ItemStack item) {
         this.hologram = hologram;
-        this.location = location;
+        this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
         this.item = item;
         // call to create entity
         getEntity();
@@ -57,7 +58,7 @@ public class HologramItemRow extends HologramRow {
     public void teleport(Location location) {
         this.location = location;
         try {
-            HoloUtils.setLocation(armorStand, location, hologram.getViewers());
+            HoloUtils.setLocation(textDisplay, location, hologram.getViewers());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,7 +75,7 @@ public class HologramItemRow extends HologramRow {
     public void setItem(ItemStack item) {
         this.item = item;
         try {
-            HoloUtils.setItem(armorStand, item);
+            HoloUtils.setItem(textDisplay, item);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,8 +111,8 @@ public class HologramItemRow extends HologramRow {
         try {
             Object packet = HoloUtils.createPacket(getEntity());
             HoloUtils.sendPacket(player, packet);
-            Method refreshMethod = armorStand.getClass().getMethod("refreshEntityData", HoloUtils.getNMSClass("server.level.ServerPlayer"));
-            refreshMethod.invoke(armorStand, HoloUtils.getHandle(player));
+            Method refreshMethod = textDisplay.getClass().getMethod("refreshEntityData", HoloUtils.getNMSClass("server.level.ServerPlayer"));
+            refreshMethod.invoke(textDisplay, HoloUtils.getHandle(player));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,8 +144,8 @@ public class HologramItemRow extends HologramRow {
     private void update() {
         for (Player player : hologram.getViewers()) {
             try {
-                Method refreshMethod = armorStand.getClass().getMethod("refreshEntityData", HoloUtils.getNMSClass("server.level.ServerPlayer"));
-                refreshMethod.invoke(armorStand, HoloUtils.getHandle(player));
+                Method refreshMethod = textDisplay.getClass().getMethod("refreshEntityData", HoloUtils.getNMSClass("server.level.ServerPlayer"));
+                refreshMethod.invoke(textDisplay, HoloUtils.getHandle(player));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -156,7 +157,7 @@ public class HologramItemRow extends HologramRow {
      * @return
      */
     private Object getEntity() {
-        if (armorStand == null) {
+        if (textDisplay == null) {
             try {
                 // NMS World
                 Object nmsWorld = HoloUtils.getNMSWorld(location.getWorld());
@@ -167,16 +168,16 @@ public class HologramItemRow extends HologramRow {
                 // World (classic NMS) or Level class (Mojang mappings)
                 Class<?> worldClass = HoloUtils.getWorldClass();
                 Constructor<?> armorStandConstructor = entityArmorStandClass.getConstructor(worldClass, double.class, double.class, double.class, itemStackClass);
-                armorStand = armorStandConstructor.newInstance(nmsWorld, location.getX(), location.getY(), location.getZ(), HoloUtils.getNMSItemStack(item));
+                textDisplay = armorStandConstructor.newInstance(nmsWorld, location.getX(), location.getY(), location.getZ(), HoloUtils.getNMSItemStack(item));
 
                 // Set properties
-                HoloUtils.setItem(armorStand, item);
-                HoloUtils.setNoGravity(armorStand, true);
+                HoloUtils.setItem(textDisplay, item);
+                HoloUtils.setNoGravity(textDisplay, true);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return armorStand;
+        return textDisplay;
     }
 }

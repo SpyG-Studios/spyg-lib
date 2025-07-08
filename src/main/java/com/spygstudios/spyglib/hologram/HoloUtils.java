@@ -156,12 +156,10 @@ public class HoloUtils {
     public static void setCustomName(Object entity, Component component) throws Exception {
         try {
             String json = GsonComponentSerializer.gson().serialize(component);
-            Method setCustomName = entity.getClass().getMethod("setCustomName", getNMSClass("network.chat.Component"));
-            Method setCustomNameVisible = entity.getClass().getMethod("setCustomNameVisible", boolean.class);
+            Method setCustomName = entity.getClass().getMethod("setText", getNMSClass("network.chat.Component"));
             Method fromJsonMethod = Class.forName("org.bukkit.craftbukkit.util.CraftChatMessage").getMethod("fromJSON", String.class);
 
             setCustomName.invoke(entity, fromJsonMethod.invoke(null, json));
-            setCustomNameVisible.invoke(entity, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,6 +233,19 @@ public class HoloUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Object getEnumElement(Class<?> enumClass, String name) throws Exception {
+        try {
+            for (Object constant : enumClass.getEnumConstants()) {
+                if (constant.toString().equalsIgnoreCase(name)) {
+                    return constant;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
