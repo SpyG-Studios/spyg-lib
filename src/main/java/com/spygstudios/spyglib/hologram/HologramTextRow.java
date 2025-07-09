@@ -19,7 +19,7 @@ import net.kyori.adventure.text.Component;
  */
 public class HologramTextRow extends HologramRow {
     /** Constant <code>HEIGHT_OFFSET=-1.75d</code> */
-    public static final double HEIGHT_OFFSET = 1.5d;
+    public static final double HEIGHT_OFFSET = 0.5d;
 
     private final Hologram hologram;
     private Location location;

@@ -16,8 +16,8 @@ import org.bukkit.inventory.ItemStack;
  * @version $Id: $Id
  */
 public class HologramItemRow extends HologramRow {
+    private static final double HEIGHT_OFFSET = -0.4d;
     private final Hologram hologram;
-    private static final double HEIGHT_OFFSET = 1d; // Adjusted height offset for item rows
     private Location location;
     private ItemStack item;
     private Object textDisplay;
@@ -56,7 +56,7 @@ public class HologramItemRow extends HologramRow {
 
     /** {@inheritDoc} */
     public void teleport(Location location) {
-        this.location = location;
+        this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
         try {
             HoloUtils.setLocation(textDisplay, location, hologram.getViewers());
         } catch (Exception e) {
