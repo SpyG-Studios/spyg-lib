@@ -28,8 +28,6 @@ public class Hologram {
     private final List<Player> viewers = new ArrayList<>();
     @Setter
     private int viewDistance;
-    @Setter
-    private boolean hideBehindBlocks;
 
     /**
      * <p>
@@ -42,11 +40,10 @@ public class Hologram {
      * @param location     a {@link org.bukkit.Location} object
      * @param viewDistance a int
      */
-    public Hologram(HologramManager manager, Location location, int viewDistance, boolean hideBehindBlocks) {
+    public Hologram(HologramManager manager, Location location, int viewDistance) {
         this.manager = manager;
         this.location = location;
         this.viewDistance = viewDistance;
-        this.hideBehindBlocks = hideBehindBlocks;
         for (Player player : location.getWorld().getPlayers()) {
             update(player);
         }
