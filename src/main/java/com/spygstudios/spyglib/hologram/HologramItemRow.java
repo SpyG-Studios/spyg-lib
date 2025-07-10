@@ -6,6 +6,9 @@ import java.lang.reflect.Method;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.joml.Vector3f;
+
+import com.mojang.math.Transformation;
 
 /**
  * <p>
@@ -179,5 +182,15 @@ public class HologramItemRow extends HologramRow {
             }
         }
         return textDisplay;
+    }
+
+    @Override
+    public void setTransformation(Transformation transformation, int delay, int duration) {
+        // Not applicable for item rows
+    }
+
+    @Override
+    public void setTransformation(Vector3f translation, int delay, int duration) {
+        // Not applicable for item rows
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.joml.Vector3f;
 
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
@@ -76,6 +77,12 @@ public class Hologram {
         }
         this.location = location;
         update();
+    }
+
+    public void setTransformation(Vector3f transformation, int delay, int duration) {
+        for (HologramRow hologramRow : rows) {
+            hologramRow.setTransformation(transformation, delay, duration);
+        }
     }
 
     /**

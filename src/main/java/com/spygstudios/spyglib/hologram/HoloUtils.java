@@ -12,6 +12,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
+
+import com.mojang.math.Transformation;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
@@ -264,6 +268,10 @@ public class HoloUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static Transformation createTransformation(Vector3f translation) {
+        return new Transformation(translation, new Quaternionf(), new Vector3f(1f, 1f, 1f), new Quaternionf());
     }
 
     /**

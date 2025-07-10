@@ -2,6 +2,9 @@ package com.spygstudios.spyglib.hologram;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.joml.Vector3f;
+
+import com.mojang.math.Transformation;
 
 /**
  * <p>
@@ -38,6 +41,10 @@ public abstract class HologramRow {
      * @param location a {@link org.bukkit.Location} object
      */
     public abstract void teleport(Location location);
+
+    public abstract void setTransformation(Transformation transformation, int delay, int duration);
+
+    public abstract void setTransformation(Vector3f translation, int delay, int duration);
 
     /**
      * <p>

@@ -6,6 +6,9 @@ import java.lang.reflect.Method;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.joml.Vector3f;
+
+import com.mojang.math.Transformation;
 
 import net.kyori.adventure.text.Component;
 
@@ -119,7 +122,8 @@ public class HologramTextRow extends HologramRow {
         try {
             Object packet = HoloUtils.createPacket(getEntity());
             HoloUtils.sendPacket(player, packet);
-            Method refreshMethod = entity.getClass().getMethod("refreshEntityData", HoloUtils.getNMSClass("server.level.ServerPlayer"));
+            Method refreshMethod = entity.getClass().getMethod("refreshEntityData",
+                    HoloUtils.getNMSClass("server.level.ServerPlayer"));
             refreshMethod.invoke(entity, HoloUtils.getHandle(player));
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,7 +154,8 @@ public class HologramTextRow extends HologramRow {
     private void update() {
         for (Player player : hologram.getViewers()) {
             try {
-                Method refreshMethod = entity.getClass().getMethod("refreshEntityData", HoloUtils.getNMSClass("server.level.ServerPlayer"));
+                Method refreshMethod = entity.getClass().getMethod("refreshEntityData",
+                        HoloUtils.getNMSClass("server.level.ServerPlayer"));
                 refreshMethod.invoke(entity, HoloUtils.getHandle(player));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -178,13 +183,11 @@ public class HologramTextRow extends HologramRow {
                 Class<?> entityTypeClass = HoloUtils.getNMSClass("world.entity.EntityType");
                 Field textDisplayField = entityTypeClass.getDeclaredField("TEXT_DISPLAY");
                 Class<?> worldClass = HoloUtils.getWorldClass();
-                Constructor<?> textDisplayConstructor = entityTextDisplayClass.getConstructor(entityTypeClass, worldClass);
+                Constructor<?> textDisplayConstructor = entityTextDisplayClass.getConstructor(entityTypeClass,
+                        worldClass);
                 entity = textDisplayConstructor.newInstance(textDisplayField.get(null), nmsWorld);
                 entity.getClass().getMethod("setPos", double.class, double.class, double.class)
                         .invoke(entity, location.getX(), location.getY(), location.getZ());
-                // entity.getClass().getMethod("setTextOpacity", byte.class).invoke(entity,
-                // (byte) 99);
-                entity.getClass().getMethod("setWidth", float.class).invoke(entity, (float) 99);
                 HoloUtils.setCustomName(entity, text);
                 Class<?> enumElementClass = HoloUtils.getNMSClass("world.entity.Display$BillboardConstraints");
                 Object enumElement = HoloUtils.getEnumElement(enumElementClass, "VERTICAL");
@@ -195,6 +198,28 @@ public class HologramTextRow extends HologramRow {
             }
         }
         return entity;
+    }
+
+    @Override
+    public void setTransformation(Transformation transformation, int delay, int duration) {
+        try {
+            Class<?> displayClass = HoloUtils.getNMSClass("world.entity.Display");
+            Method setTransformation = displayClass.getMethod("setTransformation", Transformation.class);
+            Method setDuration = displayClass.getMethod("setTransformationInterpolationDuration", int.class);
+            Method setDelay = displayClass.getMethod("setTransformationInterpolationDelay", int.class);
+
+            setDelay.invoke(entity, delay);
+            setDuration.invoke(entity, duration);
+            setTransformation.invoke(entity, transformation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void setTransformation(Vector3f translation, int delay, int duration) {
+        setTransformation(HoloUtils.createTransformation(translation), delay, duration);
     }
 
 }
