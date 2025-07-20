@@ -49,30 +49,28 @@ public class HologramManager implements Listener {
     }
 
     /**
-     * <p>
-     * createHologram.
-     * </p>
-     *
+     * 
      * @param location      a {@link org.bukkit.Location} object
-     * @param hologramRange an int representing the hologram's range
-     * @return a {@link com.spygstudios.spyglib.hologram.Hologram} object
+     * @param seeTrough     can players see the hologram through blocks
+     * @param hologramRange range of the hologram, if it is less than the entity
+     *                      tracking range, it will be set to the entity tracking
+     *                      range
+     * @return
      */
-    public Hologram createHologram(Location location, int hologramRange) {
-        Hologram hologram = new Hologram(this, location, Math.min(entityTrackingRange, hologramRange));
+    public Hologram createHologram(Location location, boolean seeTrough, int hologramRange) {
+        Hologram hologram = new Hologram(this, location, seeTrough, Math.min(entityTrackingRange, hologramRange));
         holograms.add(hologram);
         return hologram;
     }
 
     /**
-     * <p>
-     * createHologram.
-     * </p>
-     *
-     * @param location a {@link org.bukkit.Location} object
-     * @return a {@link com.spygstudios.spyglib.hologram.Hologram} object
+     * 
+     * @param location  a {@link org.bukkit.Location} object
+     * @param seeTrough can players see the hologram through blocks
+     * @return
      */
-    public Hologram createHologram(Location location) {
-        return createHologram(location, entityTrackingRange);
+    public Hologram createHologram(Location location, boolean seeTrough) {
+        return createHologram(location, seeTrough, entityTrackingRange);
     }
 
     /**

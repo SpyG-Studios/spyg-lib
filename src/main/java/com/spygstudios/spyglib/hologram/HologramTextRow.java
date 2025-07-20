@@ -22,12 +22,12 @@ import net.kyori.adventure.text.Component;
  */
 public class HologramTextRow extends HologramRow {
     /** Constant <code>HEIGHT_OFFSET=-1.75d</code> */
-    public static final double HEIGHT_OFFSET = 0.5d;
-
+    public static final double HEIGHT_OFFSET = 0.48d;
     private final Hologram hologram;
     private Location location;
     private Component text;
     private Object entity;
+    private boolean seeTrough;
 
     /**
      * Create a new hologram text row
@@ -37,10 +37,11 @@ public class HologramTextRow extends HologramRow {
      * @param location a {@link org.bukkit.Location} object
      * @param text     a {@link net.kyori.adventure.text.Component} object
      */
-    public HologramTextRow(Hologram hologram, Location location, Component text) {
+    public HologramTextRow(Hologram hologram, Location location, Component text, boolean seeTrough) {
         this.hologram = hologram;
         this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
         this.text = text;
+        this.seeTrough = seeTrough;
         // call to create entity
         getEntity();
         for (Player player : hologram.getViewers()) {
@@ -192,6 +193,7 @@ public class HologramTextRow extends HologramRow {
                 Class<?> enumElementClass = HoloUtils.getNMSClass("world.entity.Display$BillboardConstraints");
                 Object enumElement = HoloUtils.getEnumElement(enumElementClass, "VERTICAL");
                 entity.getClass().getMethod("setBillboardConstraints", enumElementClass).invoke(entity, enumElement);
+                entityTextDisplayClass.getMethod("setFlags", byte.class).invoke(entity, seeTrough ? (byte) 2 : (byte) 0);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -207,7 +209,6 @@ public class HologramTextRow extends HologramRow {
             Method setTransformation = displayClass.getMethod("setTransformation", Transformation.class);
             Method setDuration = displayClass.getMethod("setTransformationInterpolationDuration", int.class);
             Method setDelay = displayClass.getMethod("setTransformationInterpolationDelay", int.class);
-
             setDelay.invoke(entity, delay);
             setDuration.invoke(entity, duration);
             setTransformation.invoke(entity, transformation);

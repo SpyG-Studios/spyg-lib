@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.joml.Vector3f;
 
+import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
 
@@ -21,13 +22,17 @@ import net.kyori.adventure.text.Component;
  */
 public class Hologram {
     /** Constant <code>LINE_DISTANCE=0.25d</code> */
-    public static final double LINE_DISTANCE = 0.3d;
+    public static final double LINE_DISTANCE = 0.27d;
 
     private final HologramManager manager;
     private Location location;
     private final List<HologramRow> rows = new ArrayList<>();
     private final List<Player> viewers = new ArrayList<>();
     @Setter
+    @Getter
+    private boolean seeTrough;
+    @Setter
+    @Getter
     private int viewDistance;
 
     /**
@@ -41,10 +46,11 @@ public class Hologram {
      * @param location     a {@link org.bukkit.Location} object
      * @param viewDistance a int
      */
-    public Hologram(HologramManager manager, Location location, int viewDistance) {
+    public Hologram(HologramManager manager, Location location, boolean seeTrough, int viewDistance) {
         this.manager = manager;
         this.location = location;
         this.viewDistance = viewDistance;
+        this.seeTrough = seeTrough;
         for (Player player : location.getWorld().getPlayers()) {
             update(player);
         }
@@ -109,7 +115,7 @@ public class Hologram {
      *         object
      */
     public HologramRow addRow(Component text) {
-        HologramRow row = new HologramTextRow(this, location.clone().add(0, -rows.size() * LINE_DISTANCE, 0), text);
+        HologramRow row = new HologramTextRow(this, location.clone().add(0, -rows.size() * LINE_DISTANCE, 0), text, seeTrough);
         rows.add(row);
         update();
         return row;
