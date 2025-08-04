@@ -1,5 +1,7 @@
 package com.spygstudios.spyglib.inventory;
 
+import java.util.function.Predicate;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -23,7 +25,7 @@ public class InventoryUtils {
      */
     /**
      * <p>
-     * hasFreeSlot.
+     * Checks if the given inventory has a free slot.
      * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
@@ -40,7 +42,7 @@ public class InventoryUtils {
      */
     /**
      * <p>
-     * hasFreeSlot.
+     * Checks if the given player has a free slot in their inventory.
      * </p>
      *
      * @param player a {@link org.bukkit.entity.Player} object
@@ -50,57 +52,35 @@ public class InventoryUtils {
         return hasFreeSlot(player.getInventory());
     }
 
-    /*
-     * Checks if the inventory has a certain amount of free slots
-     * 
-     * @param inventory The inventory to check
-     * 
-     * @param amount The amount of free slots to check for
-     */
     /**
      * <p>
-     * hasFreeSlots.
+     * Checks if the inventory has a certain amount of free slots.
      * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
-     * @param amount    a int
+     * @param amount    an int (the number of free slots to check for)
      * @return a boolean
      */
     public static boolean hasFreeSlots(Inventory inventory, int amount) {
         return inventory.firstEmpty() >= amount - 1;
     }
 
-    /*
-     * Checks if the player has a certain amount of free slots in their
-     * inventory
-     * 
-     * @param player The player to check
-     * 
-     * @param amount The amount of free slots to check for
-     */
     /**
      * <p>
-     * hasFreeSlots.
+     * Checks if the player has a certain amount of free slots in their inventory.
      * </p>
      *
      * @param player a {@link org.bukkit.entity.Player} object
-     * @param amount a int
+     * @param amount an int
      * @return a boolean
      */
     public static boolean hasFreeSlots(Player player, int amount) {
         return hasFreeSlots(player.getInventory(), amount);
     }
 
-    /*
-     * Checks if the inventory has a certain amount of a certain item
-     * 
-     * @param inventory The inventory to check
-     * 
-     * @param material The material to check for
-     */
     /**
      * <p>
-     * hasItem.
+     * Checks if the inventory has a certain item by material.
      * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
@@ -117,17 +97,9 @@ public class InventoryUtils {
         return false;
     }
 
-    /*
-     * Checks if the player has a certain amount of a certain item in
-     * their inventory
-     * 
-     * @param player The player to check
-     * 
-     * @param material The material to check for
-     */
     /**
      * <p>
-     * hasItem.
+     * Checks if the player has a certain item by material in their inventory.
      * </p>
      *
      * @param player   a {@link org.bukkit.entity.Player} object
@@ -138,23 +110,14 @@ public class InventoryUtils {
         return hasItem(player.getInventory(), material);
     }
 
-    /*
-     * Checks if the inventory has a certain amount of a certain item
-     * 
-     * @param inventory The inventory to check
-     * 
-     * @param material The material to check for
-     * 
-     * @param amount The amount of the item to check for
-     */
     /**
      * <p>
-     * hasItem.
+     * Checks if the inventory has a certain amount of a certain item by material.
      * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
      * @param material  a {@link org.bukkit.Material} object
-     * @param amount    a int
+     * @param amount    an int
      * @return a boolean
      */
     public static boolean hasItem(Inventory inventory, Material material, int amount) {
@@ -169,40 +132,24 @@ public class InventoryUtils {
         return count >= amount;
     }
 
-    /*
-     * Checks if the player has a certain amount of a certain item in
-     * their inventory
-     * 
-     * @param player The player to check
-     * 
-     * @param material The material to check for
-     * 
-     * @param amount The amount of the item to check for
-     */
     /**
      * <p>
-     * hasItem.
+     * Checks if the player has a certain amount of a certain item by material in
+     * their inventory.
      * </p>
      *
      * @param player   a {@link org.bukkit.entity.Player} object
      * @param material a {@link org.bukkit.Material} object
-     * @param amount   a int
+     * @param amount   an int
      * @return a boolean
      */
     public static boolean hasItem(Player player, Material material, int amount) {
         return hasItem(player.getInventory(), material, amount);
     }
 
-    /*
-     * Removes all of a certain item from the inventory
-     * 
-     * @param inventory The inventory to remove the item from
-     * 
-     * @param material The material to remove
-     */
     /**
      * <p>
-     * removeAll.
+     * Remove all of a certain item from the inventory.
      * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
@@ -216,16 +163,9 @@ public class InventoryUtils {
         }
     }
 
-    /*
-     * Removes all of a certain item from the player's inventory
-     * 
-     * @param player The player to remove the item from
-     * 
-     * @param material The material to remove
-     */
     /**
      * <p>
-     * removeAll.
+     * Removes all of a certain item from the player's inventory
      * </p>
      *
      * @param player   a {@link org.bukkit.entity.Player} object
@@ -235,24 +175,36 @@ public class InventoryUtils {
         removeAll(player.getInventory(), material);
     }
 
-    /*
-     * Counts the amount of a certain item in the inventory
-     * 
-     * @param inventory The inventory to count the item for
-     * 
-     * @param material The material to count
-     * 
-     * @return The amount of the item in the inventory
-     *
-     */
     /**
      * <p>
-     * countItems.
+     * Counts the amount of items in the inventory that match a given predicate.
+     * </p>
+     *
+     * @param inventory     a {@link org.bukkit.inventory.Inventory} object
+     * @param itemPredicate a {@link java.util.function.Predicate} object
+     * @return an int
+     */
+    public static int countItems(Inventory inventory, Predicate<ItemStack> itemPredicate) {
+        int count = 0;
+
+        for (ItemStack item : inventory.getContents()) {
+            if (item != null && itemPredicate.test(item)) {
+                count += item.getAmount();
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * <p>
+     * Counts the amount of items in the player's inventory that match a given
+     * Material.
      * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
      * @param material  a {@link org.bukkit.Material} object
-     * @return a int
+     * @return an int
      */
     public static int countItems(Inventory inventory, Material material) {
         int count = 0;
@@ -266,52 +218,35 @@ public class InventoryUtils {
         return count;
     }
 
-    /*
-     * Counts the amount of a certain item in the player's inventory
-     * 
-     * @param player The player to count the item for
-     * 
-     * @param material The material to count
-     * 
-     * @return The amount of the item in the player's inventory
-     *
-     */
     /**
      * <p>
-     * countItems.
+     * Counts the amount of items in the inventory that match a given
+     * Material.
      * </p>
      *
      * @param player   a {@link org.bukkit.entity.Player} object
      * @param material a {@link org.bukkit.Material} object
-     * @return a int
+     * @return an int
      */
     public static int countItems(Player player, Material material) {
         return countItems(player.getInventory(), material);
     }
-    /*
-     * Counts the amount of a certain item in the inventory
-     * 
-     * @param inventory The inventory to count the item for
-     * 
-     * @param itemstack The itemstack to count
-     * 
-     * @return The amount of the item in the inventory
-     *
-     */
+
     /**
      * <p>
-     * countItems.
+     * Counts the amount of items in the inventory that match a given
+     * ItemMeta.
      * </p>
      *
      * @param inventory a {@link org.bukkit.inventory.Inventory} object
      * @param itemMeta  a {@link org.bukkit.inventory.meta.ItemMeta} object
-     * @return a int
+     * @return an int
      */
     public static int countItems(Inventory inventory, ItemMeta itemMeta) {
         int count = 0;
 
         for (ItemStack item : inventory.getContents()) {
-            if (item != null && item.getItemMeta().equals(itemMeta) ) {
+            if (item != null && item.getItemMeta().equals(itemMeta)) {
                 count += item.getAmount();
             }
         }
@@ -319,24 +254,15 @@ public class InventoryUtils {
         return count;
     }
 
-    /*
-     * Counts the amount of a certain item in the player's inventory
-     * 
-     * @param player The player to count the item for
-     * 
-     * @param material The material to count
-     * 
-     * @return The amount of the item in the player's inventory
-     *
-     */
     /**
      * <p>
-     * countItems.
+     * Counts the amount of items in the Player's inventory that match a given
+     * ItemMeta.
      * </p>
      *
      * @param player   a {@link org.bukkit.entity.Player} object
      * @param itemMeta a {@link org.bukkit.inventory.meta.ItemMeta} object
-     * @return a int
+     * @return an int
      */
     public static int countItems(Player player, ItemMeta itemMeta) {
         return countItems(player.getInventory(), itemMeta);
