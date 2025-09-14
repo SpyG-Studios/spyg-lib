@@ -82,7 +82,7 @@ public class PersistentData {
      * save.
      * </p>
      */
-    public void save() {
+    private void save() {
         if (itemMeta != null) {
             item.setItemMeta(itemMeta);
         }
@@ -158,6 +158,7 @@ public class PersistentData {
      */
     public void set(String key, String value) {
         dataContainer.set(getNamespacedKey(key), PersistentDataType.STRING, value);
+        save();
     }
 
     /**
@@ -170,6 +171,7 @@ public class PersistentData {
      */
     public void set(String key, int value) {
         dataContainer.set(getNamespacedKey(key), PersistentDataType.INTEGER, value);
+        save();
     }
 
     /**
@@ -182,6 +184,7 @@ public class PersistentData {
      */
     public void set(String key, double value) {
         dataContainer.set(getNamespacedKey(key), PersistentDataType.DOUBLE, value);
+        save();
     }
 
     /**
@@ -194,6 +197,7 @@ public class PersistentData {
      */
     public void set(String key, boolean value) {
         dataContainer.set(getNamespacedKey(key), PersistentDataType.BYTE, (byte) (value ? 1 : 0));
+        save();
     }
 
     /**
@@ -206,6 +210,7 @@ public class PersistentData {
      */
     public void set(String key, long value) {
         dataContainer.set(getNamespacedKey(key), PersistentDataType.LONG, value);
+        save();
     }
 
     /**
