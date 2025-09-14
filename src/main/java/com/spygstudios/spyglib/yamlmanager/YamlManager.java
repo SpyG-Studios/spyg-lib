@@ -283,22 +283,18 @@ public abstract class YamlManager {
     /**
      * Gets a list of strings from the configuration
      * 
-     * @param node         The node to get the value from
-     * 
-     * @param defaultValue The default value to return if the node is not
-     *                     found
+     * @param node The node to get the value from
      */
     /**
      * <p>
-     * getStringList.
+     * getFloatList.
      * </p>
      *
-     * @param node         a {@link java.lang.String} object
-     * @param defaultValue a {@link java.util.List} object
+     * @param node a {@link java.lang.String} object
      * @return a {@link java.util.List} object
      */
-    public List<String> getStringList(String node, List<String> defaultValue) {
-        return getConfig().getStringList(node);
+    public List<Float> getFloatList(String node) {
+        return getConfig().getFloatList(node);
     }
 
     /**
