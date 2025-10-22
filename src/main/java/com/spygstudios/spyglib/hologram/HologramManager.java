@@ -103,7 +103,7 @@ public class HologramManager implements Listener {
     public void onMove(PlayerMoveEvent event) {
         for (Hologram hologram : holograms) {
             if (event.getPlayer().getWorld().equals(hologram.getLocation().getWorld())) {
-                hologram.update(event.getPlayer());
+                hologram.updateVisibility(event.getPlayer());
             }
         }
     }
@@ -120,7 +120,7 @@ public class HologramManager implements Listener {
     public void onTeleport(PlayerTeleportEvent event) {
         for (Hologram hologram : holograms) {
             if (event.getTo().getWorld().equals(hologram.getLocation().getWorld())) {
-                hologram.update(event.getPlayer());
+                hologram.updateVisibility(event.getPlayer());
             }
         }
     }

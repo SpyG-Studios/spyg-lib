@@ -2,6 +2,7 @@ package com.spygstudios.spyglib.hologram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -52,7 +53,7 @@ public class Hologram {
         this.viewDistance = viewDistance;
         this.seeTrough = seeTrough;
         for (Player player : location.getWorld().getPlayers()) {
-            update(player);
+            updateVisibility(player);
         }
     }
 
@@ -196,12 +197,24 @@ public class Hologram {
 
     /**
      * <p>
-     * Update the hologram for a player.
+     * Update the hologram visibility for a player.
      * </p>
      *
      * @param player a {@link org.bukkit.entity.Player} object
      */
-    public void update(Player player) {
+    public void updateVisibility(Player player) {
+        updateVisibility(player, p -> true);
+    }
+
+    /**
+     * <p>
+     * Update the hologram visibility for a player based on a predicate.
+     * </p>
+     *
+     * @param player a {@link org.bukkit.entity.Player} object
+     * @param canSee a {@link java.util.function.Predicate} object
+     */
+    public void updateVisibility(Player player, Predicate<Player> canSee) {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null");
         }
@@ -212,7 +225,7 @@ public class Hologram {
         }
 
         double distSqrt = player.getLocation().distanceSquared(location);
-        if (distSqrt <= Math.pow(viewDistance, 2)) {
+        if (distSqrt <= Math.pow(viewDistance, 2) && canSee.test(player)) {
             if (!viewers.contains(player)) {
                 viewers.add(player);
                 for (HologramRow row : rows) {
