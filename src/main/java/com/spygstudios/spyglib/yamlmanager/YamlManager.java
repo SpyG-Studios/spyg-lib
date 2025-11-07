@@ -245,7 +245,7 @@ public abstract class YamlManager {
      * @return a {@link java.lang.String} object
      */
     public String getPrefix() {
-        return getString("prefix");
+        return getString("prefix", "");
     }
 
     /**
