@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -44,6 +46,7 @@ public class HologramManager implements Listener {
     }
 
     private int getEntityTrackingRange() {
+        @SuppressWarnings("removal")
         int dist = plugin.getServer().spigot().getConfig().getInt("world-settings.default.entity-tracking-range.players", 64);
         return Math.min(plugin.getServer().getViewDistance() * 16, dist);
     }
@@ -55,12 +58,27 @@ public class HologramManager implements Listener {
      * @param hologramRange range of the hologram, if it is less than the entity
      *                      tracking range, it will be set to the entity tracking
      *                      range
+     * @param canSee        a {@link java.util.function.Predicate} object
      * @return
      */
-    public Hologram createHologram(Location location, boolean seeTrough, int hologramRange) {
-        Hologram hologram = new Hologram(this, location, seeTrough, Math.min(entityTrackingRange, hologramRange));
+    public Hologram createHologram(Location location, boolean seeTrough, int hologramRange, Predicate<Player> canSee) {
+        Hologram hologram = new Hologram(this, location, seeTrough, Math.min(entityTrackingRange, hologramRange), canSee);
         holograms.add(hologram);
         return hologram;
+    }
+
+    /**
+     * 
+     * @param location      a {@link org.bukkit.Location} object
+     * @param seeTrough     can players see the hologram through blocks
+     * @param hologramRange range of the hologram, if it is less than the entity
+     *                      tracking range, it will be set to the entity tracking
+     *                      range
+     * @param canSee        a {@link java.util.function.Predicate} object
+     * @return
+     */
+    public Hologram createHologram(Location location, boolean seeTrough, Predicate<Player> canSee) {
+        return createHologram(location, seeTrough, entityTrackingRange, canSee);
     }
 
     /**
@@ -70,7 +88,7 @@ public class HologramManager implements Listener {
      * @return
      */
     public Hologram createHologram(Location location, boolean seeTrough) {
-        return createHologram(location, seeTrough, entityTrackingRange);
+        return createHologram(location, seeTrough, entityTrackingRange, p -> true);
     }
 
     /**
@@ -181,7 +199,7 @@ public class HologramManager implements Listener {
     }
 
     private void syncHologramLocations() {
-        for (Hologram hologram : holograms) {
+        for (Hologram hologram : new ArrayList<>(holograms)) {
             hologram.teleport(hologram.getLocation());
         }
     }

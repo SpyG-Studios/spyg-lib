@@ -64,6 +64,9 @@ public class HologramTextRow extends HologramRow {
      * </p>
      */
     public void teleport(Location location) {
+        if (this.location.equals(location)) {
+            return;
+        }
         this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
         try {
             HoloUtils.setLocation(entity, this.location, hologram.getViewers());

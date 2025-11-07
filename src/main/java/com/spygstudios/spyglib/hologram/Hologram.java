@@ -35,10 +35,12 @@ public class Hologram {
     @Setter
     @Getter
     private int viewDistance;
+    @Getter
+    private final Predicate<Player> canSee;
 
     /**
      * <p>
-     * Constructor for Hologram.
+     * Constructor for Hologram with visibility predicate.
      * </p>
      *
      * @param manager      a
@@ -46,12 +48,14 @@ public class Hologram {
      *                     object
      * @param location     a {@link org.bukkit.Location} object
      * @param viewDistance a int
+     * @param canSee       a {@link java.util.function.Predicate} object
      */
-    public Hologram(HologramManager manager, Location location, boolean seeTrough, int viewDistance) {
+    Hologram(HologramManager manager, Location location, boolean seeTrough, int viewDistance, Predicate<Player> canSee) {
         this.manager = manager;
         this.location = location;
         this.viewDistance = viewDistance;
         this.seeTrough = seeTrough;
+        this.canSee = canSee;
         for (Player player : location.getWorld().getPlayers()) {
             updateVisibility(player);
         }
@@ -197,24 +201,12 @@ public class Hologram {
 
     /**
      * <p>
-     * Update the hologram visibility for a player.
-     * </p>
-     *
-     * @param player a {@link org.bukkit.entity.Player} object
-     */
-    public void updateVisibility(Player player) {
-        updateVisibility(player, p -> true);
-    }
-
-    /**
-     * <p>
      * Update the hologram visibility for a player based on a predicate.
      * </p>
      *
      * @param player a {@link org.bukkit.entity.Player} object
-     * @param canSee a {@link java.util.function.Predicate} object
      */
-    public void updateVisibility(Player player, Predicate<Player> canSee) {
+    void updateVisibility(Player player) {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null");
         }
@@ -237,7 +229,7 @@ public class Hologram {
         }
     }
 
-    public void removeViewer(Player player) {
+    void removeViewer(Player player) {
         if (viewers.contains(player)) {
             viewers.remove(player);
             for (HologramRow row : rows) {
