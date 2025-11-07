@@ -50,6 +50,22 @@ public abstract class YamlManager {
         yamlManagers.add(this);
     }
 
+
+    /**
+     * <p>
+     * Constructor for YamlManager.
+     * </p>
+     *
+     * @param file a {@link java.io.File} file
+     * @param plugin   a {@link org.bukkit.plugin.java.JavaPlugin} object
+     */
+    protected YamlManager(File file, JavaPlugin plugin) {
+        this.filename = file.getName();
+        this.plugin = plugin;
+        this.configFile = file;
+        this.config = YamlConfiguration.loadConfiguration(configFile);
+    }
+
     /**
      * <p>
      * reloadConfig.
