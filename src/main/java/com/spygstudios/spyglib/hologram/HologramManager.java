@@ -18,6 +18,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.papermc.paper.event.player.PlayerClientLoadedWorldEvent;
+
 /**
  * <p>
  * HologramManager class.
@@ -92,6 +94,18 @@ public class HologramManager implements Listener {
     }
 
     /**
+     * 
+     * @param location  a {@link org.bukkit.Location} object
+     * @param seeTrough can players see the hologram through blocks
+     * @return
+     */
+    public Hologram createHologram(Location location, boolean seeTrough, int hologramRange) {
+        Hologram hologram = new Hologram(this, location, seeTrough, Math.min(entityTrackingRange, hologramRange), p -> true);
+        holograms.add(hologram);
+        return hologram;
+    }
+
+    /**
      * <p>
      * removeHologram.
      * </p>
@@ -106,6 +120,15 @@ public class HologramManager implements Listener {
         if (holograms.contains(hologram)) {
             holograms.remove(hologram);
             hologram.remove();
+        }
+    }
+
+    @EventHandler
+    public void onPlayerLoaded(PlayerClientLoadedWorldEvent event) {
+        for (Hologram hologram : holograms) {
+            if (event.getPlayer().getWorld().equals(hologram.getLocation().getWorld())) {
+                hologram.updateVisibility(event.getPlayer());
+            }
         }
     }
 
