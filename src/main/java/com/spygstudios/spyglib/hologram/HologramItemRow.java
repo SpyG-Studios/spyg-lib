@@ -6,9 +6,6 @@ import java.lang.reflect.Method;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.joml.Vector3f;
-
-import com.mojang.math.Transformation;
 
 /**
  * <p>
@@ -20,8 +17,6 @@ import com.mojang.math.Transformation;
  */
 public class HologramItemRow extends HologramRow {
     private static final double HEIGHT_OFFSET = -0.4d;
-    private final Hologram hologram;
-    private Location location;
     private ItemStack item;
     private Object textDisplay;
 
@@ -36,8 +31,7 @@ public class HologramItemRow extends HologramRow {
      * @param item     a {@link org.bukkit.inventory.ItemStack} object
      */
     public HologramItemRow(Hologram hologram, Location location, ItemStack item) {
-        this.hologram = hologram;
-        this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
+        super(hologram, location.clone().add(0, HEIGHT_OFFSET, 0));
         this.item = item;
         // call to create entity
         getEntity();
@@ -59,9 +53,9 @@ public class HologramItemRow extends HologramRow {
 
     /** {@inheritDoc} */
     public void teleport(Location location) {
-        this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
+        setLocation(location.clone().add(0, HEIGHT_OFFSET, 0));
         try {
-            HoloUtils.setLocation(textDisplay, location, hologram.getViewers());
+            HoloUtils.setLocation(textDisplay, location, getHologram().getViewers());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +85,7 @@ public class HologramItemRow extends HologramRow {
      * </p>
      */
     public void remove() {
-        for (Player player : hologram.getViewers()) {
+        for (Player player : getHologram().getViewers()) {
             try {
                 Object packet = HoloUtils.destroyPacket(getEntity());
                 HoloUtils.sendPacket(player, packet);
@@ -100,7 +94,7 @@ public class HologramItemRow extends HologramRow {
             }
         }
 
-        hologram.removeRow(this);
+        getHologram().removeRow(this);
     }
 
     /**
@@ -145,7 +139,7 @@ public class HologramItemRow extends HologramRow {
      * @param player a {@link org.bukkit.entity.Player} object
      */
     private void update() {
-        for (Player player : hologram.getViewers()) {
+        for (Player player : getHologram().getViewers()) {
             try {
                 Method refreshMethod = textDisplay.getClass().getMethod("refreshEntityData", HoloUtils.getNMSClass("server.level.ServerPlayer"));
                 refreshMethod.invoke(textDisplay, HoloUtils.getHandle(player));
@@ -163,7 +157,7 @@ public class HologramItemRow extends HologramRow {
         if (textDisplay == null) {
             try {
                 // NMS World
-                Object nmsWorld = HoloUtils.getNMSWorld(location.getWorld());
+                Object nmsWorld = HoloUtils.getNMSWorld(getLocation().getWorld());
 
                 Class<?> itemStackClass = HoloUtils.getNMSClass("world.item.ItemStack");
                 // NMS ItemEntity
@@ -171,7 +165,7 @@ public class HologramItemRow extends HologramRow {
                 // World (classic NMS) or Level class (Mojang mappings)
                 Class<?> worldClass = HoloUtils.getWorldClass();
                 Constructor<?> armorStandConstructor = entityArmorStandClass.getConstructor(worldClass, double.class, double.class, double.class, itemStackClass);
-                textDisplay = armorStandConstructor.newInstance(nmsWorld, location.getX(), location.getY(), location.getZ(), HoloUtils.getNMSItemStack(item));
+                textDisplay = armorStandConstructor.newInstance(nmsWorld, getLocation().getX(), getLocation().getY(), getLocation().getZ(), HoloUtils.getNMSItemStack(item));
 
                 // Set properties
                 HoloUtils.setItem(textDisplay, item);
@@ -184,13 +178,4 @@ public class HologramItemRow extends HologramRow {
         return textDisplay;
     }
 
-    @Override
-    public void setTransformation(Transformation transformation, int delay, int duration) {
-        // Not applicable for item rows
-    }
-
-    @Override
-    public void setTransformation(Vector3f translation, int delay, int duration) {
-        // Not applicable for item rows
-    }
 }

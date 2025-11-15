@@ -21,13 +21,9 @@ import net.kyori.adventure.text.Component;
  * @version $Id: $Id
  */
 public class HologramTextRow extends HologramRow {
-    /** Constant <code>HEIGHT_OFFSET=-1.75d</code> */
     public static final double HEIGHT_OFFSET = 0.48d;
-    private final Hologram hologram;
-    private Location location;
     private Component text;
     private Object entity;
-    private boolean seeTrough;
 
     /**
      * Create a new hologram text row
@@ -38,10 +34,8 @@ public class HologramTextRow extends HologramRow {
      * @param text     a {@link net.kyori.adventure.text.Component} object
      */
     public HologramTextRow(Hologram hologram, Location location, Component text, boolean seeTrough) {
-        this.hologram = hologram;
-        this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
+        super(hologram, location.clone().add(0, HEIGHT_OFFSET, 0));
         this.text = text;
-        this.seeTrough = seeTrough;
         // call to create entity
         getEntity();
         for (Player player : hologram.getViewers()) {
@@ -64,12 +58,12 @@ public class HologramTextRow extends HologramRow {
      * </p>
      */
     public void teleport(Location location) {
-        if (this.location.equals(location)) {
+        if (this.getLocation().equals(location)) {
             return;
         }
-        this.location = location.clone().add(0, HEIGHT_OFFSET, 0);
+        setLocation(location.clone().add(0, HEIGHT_OFFSET, 0));
         try {
-            HoloUtils.setLocation(entity, this.location, hologram.getViewers());
+            HoloUtils.setLocation(entity, this.getLocation(), getHologram().getViewers());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,7 +79,7 @@ public class HologramTextRow extends HologramRow {
      */
     public void setText(Component text) {
         this.text = text;
-        for (Player player : hologram.getViewers()) {
+        for (Player player : getHologram().getViewers()) {
             try {
                 Object packet = HoloUtils.destroyPacket(getEntity());
                 HoloUtils.sendPacket(player, packet);
@@ -103,7 +97,7 @@ public class HologramTextRow extends HologramRow {
      * </p>
      */
     public void remove() {
-        for (Player player : hologram.getViewers()) {
+        for (Player player : getHologram().getViewers()) {
             try {
                 Object packet = HoloUtils.destroyPacket(getEntity());
                 HoloUtils.sendPacket(player, packet);
@@ -112,7 +106,7 @@ public class HologramTextRow extends HologramRow {
             }
         }
 
-        hologram.removeRow(this);
+        getHologram().removeRow(this);
     }
 
     /**
@@ -156,7 +150,7 @@ public class HologramTextRow extends HologramRow {
      * </p>
      */
     private void update() {
-        for (Player player : hologram.getViewers()) {
+        for (Player player : getHologram().getViewers()) {
             try {
                 Method refreshMethod = entity.getClass().getMethod("refreshEntityData",
                         HoloUtils.getNMSClass("server.level.ServerPlayer"));
@@ -179,7 +173,7 @@ public class HologramTextRow extends HologramRow {
 
             try {
                 // NMS World
-                Object nmsWorld = HoloUtils.getNMSWorld(location.getWorld());
+                Object nmsWorld = HoloUtils.getNMSWorld(getLocation().getWorld());
 
                 // NMS EntityArmorStand
                 Class<?> entityTextDisplayClass = HoloUtils.getNMSClass("world.entity.Display$TextDisplay");
@@ -191,12 +185,12 @@ public class HologramTextRow extends HologramRow {
                         worldClass);
                 entity = textDisplayConstructor.newInstance(textDisplayField.get(null), nmsWorld);
                 entity.getClass().getMethod("setPos", double.class, double.class, double.class)
-                        .invoke(entity, location.getX(), location.getY(), location.getZ());
+                        .invoke(entity, getLocation().getX(), getLocation().getY(), getLocation().getZ());
                 HoloUtils.setCustomName(entity, text);
                 Class<?> enumElementClass = HoloUtils.getNMSClass("world.entity.Display$BillboardConstraints");
                 Object enumElement = HoloUtils.getEnumElement(enumElementClass, "VERTICAL");
                 entity.getClass().getMethod("setBillboardConstraints", enumElementClass).invoke(entity, enumElement);
-                entityTextDisplayClass.getMethod("setFlags", byte.class).invoke(entity, seeTrough ? (byte) 2 : (byte) 0);
+                entityTextDisplayClass.getMethod("setFlags", byte.class).invoke(entity, getHologram().isSeeTrough() ? (byte) 2 : (byte) 0);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -205,7 +199,6 @@ public class HologramTextRow extends HologramRow {
         return entity;
     }
 
-    @Override
     public void setTransformation(Transformation transformation, int delay, int duration) {
         try {
             Class<?> displayClass = HoloUtils.getNMSClass("world.entity.Display");
@@ -221,7 +214,6 @@ public class HologramTextRow extends HologramRow {
 
     }
 
-    @Override
     public void setTransformation(Vector3f translation, int delay, int duration) {
         setTransformation(HoloUtils.createTransformation(translation), delay, duration);
     }

@@ -27,8 +27,8 @@ public class Hologram {
 
     private final HologramManager manager;
     private Location location;
-    private final List<HologramRow> rows = new ArrayList<>();
-    private final List<Player> viewers = new ArrayList<>();
+    private final List<HologramRow> rows;
+    private final List<Player> viewers;
     @Setter
     @Getter
     private boolean seeTrough;
@@ -56,6 +56,8 @@ public class Hologram {
         this.viewDistance = viewDistance;
         this.seeTrough = seeTrough;
         this.canSee = canSee;
+        this.rows = new ArrayList<>();
+        this.viewers = new ArrayList<>();
         for (Player player : location.getWorld().getPlayers()) {
             updateVisibility(player);
         }
@@ -92,21 +94,43 @@ public class Hologram {
 
     public void setTransformation(Vector3f transformation, int delay, int duration) {
         for (HologramRow hologramRow : rows) {
-            hologramRow.setTransformation(transformation, delay, duration);
+            if (hologramRow instanceof HologramTextRow textRow) {
+                textRow.setTransformation(transformation, delay, duration);
+            }
         }
     }
 
-    /**
-     * <p>
-     * Add a new row {@link java.lang.String} to the hologram.
-     * </p>
-     *
-     * @param text a {@link java.lang.String} object
-     * @return a {@link com.spygstudios.spyglib.hologram.HologramRow}
-     *         object
-     */
-    public HologramRow addRow(String text) {
-        return addRow(Component.text(text));
+    public void setRow(int index, Component text) {
+        if (index < 0 || index >= rows.size()) {
+            throw new IllegalArgumentException("Index out of bounds");
+        }
+        HologramRow oldRow = rows.get(index);
+        HologramRow newRow = new HologramTextRow(this, oldRow.getLocation().clone(), text, seeTrough);
+        oldRow.remove();
+        rows.set(index, newRow);
+        update();
+    }
+
+    public void setRow(int index, ItemStack item) {
+        if (index < 0 || index >= rows.size()) {
+            throw new IllegalArgumentException("Index out of bounds");
+        }
+        HologramRow oldRow = rows.get(index);
+        HologramRow newRow = new HologramItemRow(this, oldRow.getLocation().clone(), item);
+        oldRow.remove();
+        rows.set(index, newRow);
+        update();
+    }
+
+    public void setRows(List<Component> texts) {
+        for (HologramRow row : new ArrayList<>(rows)) {
+            row.remove();
+        }
+        rows.clear();
+        for (Component text : texts) {
+            addRow(text);
+        }
+        update();
     }
 
     /**
