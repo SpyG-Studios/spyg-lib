@@ -319,7 +319,7 @@ public abstract class YamlManager {
      * @param node  The node to get the value from
      * @param value The value to set
      */
-    public void overwriteSet(String node, Object value) {
+    public void set(String node, Object value) {
         getConfig().set(node, value);
     }
 
@@ -338,7 +338,7 @@ public abstract class YamlManager {
      * @param node  a {@link java.lang.String} object
      * @param value a {@link java.lang.Object} object
      */
-    public void set(String node, Object value) {
+    public void setOrDefault(String node, Object value) {
         getConfig().set(node, config.get(node, value));
     }
 
