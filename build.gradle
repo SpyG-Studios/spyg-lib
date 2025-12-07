@@ -1,0 +1,78 @@
+plugins {
+	id 'java'
+	id("com.github.johnrengelman.shadow") version("8.1.1")
+	id 'maven-publish'
+}
+
+group = 'com.spygstudios'
+version = '1.4.6'
+description = 'A lightweight library for Spyg plugins.'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+	withSourcesJar()
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifactId = 'spyglib'
+			artifact tasks.shadowJar
+			artifact tasks.sourcesJar
+		}
+	}
+}
+
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url = uri('https://repo.papermc.io/repository/maven-public/') }
+	maven { url = uri('https://repo.codemc.org/repository/maven-public/') }
+	maven { url = uri('https://repo.panda-lang.org/releases') }
+	maven { url = uri('https://libraries.minecraft.net/') }
+	maven { url = uri('https://jitpack.io') }
+}
+
+ext {
+	lombokVersion = '1.18.38'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+dependencies {
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	implementation "dev.rollczi:litecommands-adventure:3.10.4"
+	implementation "dev.rollczi:litecommands-bukkit:3.10.4"
+	compileOnly "io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT"
+	compileOnly "io.papermc.paper:paper:1.21.7"
+}
+
+tasks.withType(JavaCompile).configureEach { t ->
+	options.encoding = 'UTF-8'
+	options.compilerArgs += ['-parameters']
+}
+
+tasks.jar {
+    enabled = false
+}
+
+tasks.shadowJar {
+    archiveBaseName.set('spyglib')
+    archiveVersion.set(project.version.toString())
+    archiveClassifier.set('')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*'
+    zip64 true
+}
+
+tasks.build {
+	dependsOn tasks.shadowJar
+}
