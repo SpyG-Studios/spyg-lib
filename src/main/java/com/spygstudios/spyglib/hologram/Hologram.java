@@ -105,6 +105,14 @@ public class Hologram {
             throw new IllegalArgumentException("Index out of bounds");
         }
         HologramRow oldRow = rows.get(index);
+        if (oldRow instanceof HologramTextRow textRow) {
+            if (textRow.getText().equals(text)) {
+                return;
+            }
+            textRow.setText(text);
+            update();
+            return;
+        }
         HologramRow newRow = new HologramTextRow(this, oldRow.getLocation().clone(), text, seeTrough);
         oldRow.remove();
         rows.set(index, newRow);
@@ -123,6 +131,18 @@ public class Hologram {
     }
 
     public void setRows(List<Component> texts) {
+        if (rows.size() <= texts.size() && texts.size() > 0 && rows.size() > 0) {
+            for (int i = 0; i < texts.size(); i++) {
+                if (i < rows.size()) {
+                    setRow(i, texts.get(i));
+                } else {
+                    addRow(texts.get(i));
+                }
+            }
+            update();
+            return;
+        }
+
         for (HologramRow row : new ArrayList<>(rows)) {
             row.remove();
         }
@@ -199,6 +219,13 @@ public class Hologram {
             rows.remove(row);
             update();
         }
+    }
+
+    public void clearRows() {
+        for (HologramRow row : new ArrayList<>(rows)) {
+            row.remove();
+        }
+        rows.clear();
     }
 
     /**
