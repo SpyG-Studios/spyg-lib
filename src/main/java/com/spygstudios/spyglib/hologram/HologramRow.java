@@ -37,6 +37,13 @@ public abstract class HologramRow {
 
     /**
      * <p>
+     * Show the hologram row to all viewers
+     * </p>
+     */
+    public abstract void show();
+
+    /**
+     * <p>
      * Hide the hologram row from a player
      * </p>
      *

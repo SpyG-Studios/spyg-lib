@@ -38,9 +38,7 @@ public class HologramTextRow extends HologramRow {
         this.text = text;
         // call to create entity
         getEntity();
-        for (Player player : hologram.getViewers()) {
-            show(player);
-        }
+        show();
     }
 
     /**
@@ -125,6 +123,12 @@ public class HologramTextRow extends HologramRow {
             refreshMethod.invoke(entity, HoloUtils.getHandle(player));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void show() {
+        for (Player player : getHologram().getViewers()) {
+            show(player);
         }
     }
 

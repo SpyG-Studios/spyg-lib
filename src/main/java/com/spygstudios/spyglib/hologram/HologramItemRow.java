@@ -35,9 +35,7 @@ public class HologramItemRow extends HologramRow {
         this.item = item;
         // call to create entity
         getEntity();
-        for (Player player : hologram.getViewers()) {
-            show(player);
-        }
+        show();
     }
 
     /**
@@ -176,6 +174,13 @@ public class HologramItemRow extends HologramRow {
             }
         }
         return textDisplay;
+    }
+
+    @Override
+    public void show() {
+        for (Player player : getHologram().getViewers()) {
+            show(player);
+        }
     }
 
 }

@@ -110,12 +110,13 @@ public class Hologram {
                 return;
             }
             textRow.setText(text);
+            textRow.show();
             update();
             return;
         }
         HologramRow newRow = new HologramTextRow(this, oldRow.getLocation().clone(), text, seeTrough);
-        oldRow.remove();
         rows.set(index, newRow);
+        newRow.show();
         update();
     }
 
@@ -125,8 +126,8 @@ public class Hologram {
         }
         HologramRow oldRow = rows.get(index);
         HologramRow newRow = new HologramItemRow(this, oldRow.getLocation().clone(), item);
-        oldRow.remove();
         rows.set(index, newRow);
+        newRow.show();
         update();
     }
 
@@ -139,7 +140,6 @@ public class Hologram {
                     addRow(texts.get(i));
                 }
             }
-            update();
             return;
         }
 
@@ -150,7 +150,6 @@ public class Hologram {
         for (Component text : texts) {
             addRow(text);
         }
-        update();
     }
 
     /**
@@ -277,6 +276,12 @@ public class Hologram {
             }
         } else {
             removeViewer(player);
+        }
+    }
+
+    void updateVisibility() {
+        for (Player player : location.getWorld().getPlayers()) {
+            updateVisibility(player);
         }
     }
 
