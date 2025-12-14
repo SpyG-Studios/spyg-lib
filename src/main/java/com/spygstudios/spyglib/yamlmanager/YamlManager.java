@@ -50,14 +50,13 @@ public abstract class YamlManager {
         yamlManagers.add(this);
     }
 
-
     /**
      * <p>
      * Constructor for YamlManager.
      * </p>
      *
-     * @param file a {@link java.io.File} file
-     * @param plugin   a {@link org.bukkit.plugin.java.JavaPlugin} object
+     * @param file   a {@link java.io.File} file
+     * @param plugin a {@link org.bukkit.plugin.java.JavaPlugin} object
      */
     protected YamlManager(File file, JavaPlugin plugin) {
         this.filename = file.getName();
@@ -340,6 +339,30 @@ public abstract class YamlManager {
      */
     public void setOrDefault(String node, Object value) {
         getConfig().set(node, config.get(node, value));
+    }
+
+    /**
+     * Sets a value in the configuration, if the value is not already set
+     * 
+     * @param node     The node to set the value in
+     * 
+     * @param value    The value to set
+     * 
+     * @param comments The comments to set
+     *
+     */
+    /**
+     * <p>
+     * set.
+     * </p>
+     *
+     * @param node     a {@link java.lang.String} object
+     * @param value    a {@link java.lang.Object} object
+     * @param comments a {@link java.util.List} object
+     */
+    public void setOrDefault(String node, Object value, List<String> comments) {
+        getConfig().set(node, config.get(node, value));
+        getConfig().setComments(node, comments);
     }
 
     /**
